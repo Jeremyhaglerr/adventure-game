@@ -21,6 +21,7 @@ let currentEnemyName,
 /*------------------------ Cached Element References ------------------------*/
 
 const mainGameArea = document.getElementById('main-game-area')
+const statBar = document.getElementById('current-stats')
 
 /*----------------------------- Event Listeners -----------------------------*/
 
@@ -70,6 +71,7 @@ function classChoices() {//displays class choices for user to choose from and up
     CurrentPlayerHighAttack = ranger.highAttackRange
     currentPLayerDefense = ranger.defense
     currentPlayerPotions = ranger.potions
+    render()
   }))
   document.getElementById('fighter-btn').addEventListener('click', (() => {
     currentPlayerHealth = fighter.health
@@ -77,12 +79,62 @@ function classChoices() {//displays class choices for user to choose from and up
     CurrentPlayerHighAttack = fighter.highAttackRange
     currentPLayerDefense = fighter.defense
     currentPlayerPotions = fighter.potions
+    render()
   }))
-  render()
+  
 }
 
 function render() {
+  let currentPlayerStats = document.createElement("div")
+  currentPlayerStats.classList.add("current-stats")
+  currentPlayerStats.innerHTML =
+  `<div id = "current-stats-container">
+  <div>Health: ${currentPlayerHealth}</div>
+  <div>Attack Range: ${currentPlayerLowAttack}-${CurrentPlayerHighAttack}</div>
+  <div>Defense: ${currentPLayerDefense}</div>
+  <div>Potions: ${currentPlayerPotions}</div>
+  <div>Rooms Survived: ${currentRoomsSurvived}</div>
+  </div>
+  `
+  if (statBar.hasChildNodes){
+  statBar.removeChild(statBar.lastChild)
+  statBar.appendChild(currentPlayerStats)
+  } else {statBar.appendChild(currentPlayerStats)}
+  checkWin()
+}
 
+function checkWin() {
+  if (currentEnemyHealth === 0){
+    while (mainGameArea.firstChild) {
+      mainGameArea.removeChild(mainGameArea.firstChild)
+  }
+  let killEnemyMessage = document.createElement("div")
+  killEnemyMessage.classList.add("defeat-enemy")
+  killEnemyMessage.innerHTML = 
+  `
+  <div class="message-container">
+  <h3>The ${currentEnemyName} lies dead before you! Congratulations! Do you continue your adventure, or retreat to safety?
+  <button type="button" class="btn btn-primary">Continue?</button>
+  <button type="button" class="btn btn-danger">Retreat?</button>
+  </div>
+  `
+  mainGameArea.appendChild(killEnemyMessage) 
+}
+if (currentPlayerHealth === 0){
+  while (mainGameArea.firstChild) {
+    mainGameArea.removeChild(mainGameArea.firstChild)
+  }
+let deathMessage = document.createElement("div")
+  deathMessage.classList.add("player-death")
+  deathMessage.innerHTML = 
+  `
+  <div class="message-container">
+  <h3>You lie dead before the ${currentEnemyName}. There are many more that seek to make their fortune in these depths, continue on and guide their story!
+  <button type="button" class="btn btn-primary">Replay</button>
+  </div>
+  `
+  mainGameArea.appendChild(deathMessage) 
+}
 }
 
 function combat() {
