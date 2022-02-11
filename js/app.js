@@ -1,7 +1,7 @@
 /*-------------------------------- Constants --------------------------------*/
 
 import { getRandomEncounter, fighter, ranger, optionalBoss, mainBoss } from "../data/reference-arrays.js"
-console.log(getRandomEncounter())//logging result of getRandomEncounter 
+
 
 /*---------------------------- Variables (state) ----------------------------*/
 
@@ -44,7 +44,7 @@ function classChoices() {//displays class choices for user to choose from and up
   let classChoices = document.createElement("div")//creates div container for class choices
   classChoices.classList.add("class-choices")//adds class to div container
   classChoices.innerHTML = //sets the content of div container
-  `
+    `
   <h1>Choose Your Class</h1>
   <div id = "class-cards">
   <div class="card fighter" style="width: 40rem;">
@@ -52,7 +52,7 @@ function classChoices() {//displays class choices for user to choose from and up
   <div class="card-body">
   <h5 class="card-title">${fighter.name}</h5>
   <h6>Health:${fighter.health} Attack Range: ${fighter.lowAttackRange}-${fighter.highAttackRange} Defense: ${fighter.defense} Potions: ${fighter.potions}</h6>
-  <a href="#" class="btn btn-primary" id = "fighter-btn" fighter>Choose Class</a>
+  <a href="#" class="btn btn-primary" id = "fighter-btn">Choose Class</a>
   </div>
   </div>
   <div class="card ranger" style="width: 40rem;">
@@ -72,6 +72,7 @@ function classChoices() {//displays class choices for user to choose from and up
     currentPLayerDefense = ranger.defense
     currentPlayerPotions = ranger.potions
     render()
+    encounterRoom()
   }))
   document.getElementById('fighter-btn').addEventListener('click', (() => {
     currentPlayerHealth = fighter.health
@@ -80,15 +81,16 @@ function classChoices() {//displays class choices for user to choose from and up
     currentPLayerDefense = fighter.defense
     currentPlayerPotions = fighter.potions
     render()
+    encounterRoom()
   }))
-  
+
 }
 
 function render() {
   let currentPlayerStats = document.createElement("div")
   currentPlayerStats.classList.add("current-stats")
   currentPlayerStats.innerHTML =
-  `<div id = "current-stats-container">
+    `<div id = "current-stats-container">
   <div>Health: ${currentPlayerHealth}</div>
   <div>Attack Range: ${currentPlayerLowAttack}-${CurrentPlayerHighAttack}</div>
   <div>Defense: ${currentPLayerDefense}</div>
@@ -96,49 +98,93 @@ function render() {
   <div>Rooms Survived: ${currentRoomsSurvived}</div>
   </div>
   `
-  if (statBar.hasChildNodes){
-  statBar.removeChild(statBar.lastChild)
-  statBar.appendChild(currentPlayerStats)
-  } else {statBar.appendChild(currentPlayerStats)}
+  if (statBar.hasChildNodes) {
+    statBar.removeChild(statBar.lastChild)
+    statBar.appendChild(currentPlayerStats)
+  } else { statBar.appendChild(currentPlayerStats) }
   checkWin()
 }
 
 function checkWin() {
-  if (currentEnemyHealth === 0){
+  if (currentEnemyHealth === 0) {
     while (mainGameArea.firstChild) {
       mainGameArea.removeChild(mainGameArea.firstChild)
-  }
-  let killEnemyMessage = document.createElement("div")
-  killEnemyMessage.classList.add("defeat-enemy")
-  killEnemyMessage.innerHTML = 
-  `
+    }
+    let killEnemyMessage = document.createElement("div")
+    killEnemyMessage.classList.add("defeat-enemy")
+    killEnemyMessage.innerHTML =
+      `
   <div class="message-container">
   <h3>The ${currentEnemyName} lies dead before you! Congratulations! Do you continue your adventure, or retreat to safety?
-  <button type="button" class="btn btn-primary">Continue?</button>
-  <button type="button" class="btn btn-danger">Retreat?</button>
+  <button type="button" class="btn btn-primary" id = "continue-btn">Continue?</button>
+  <button type="button" class="btn btn-danger" id = "replay-btn">Retreat?</button>
   </div>
   `
-  mainGameArea.appendChild(killEnemyMessage) 
+    mainGameArea.appendChild(killEnemyMessage)
+    currentRoomsSurvived = currentRoomsSurvived + 1
+    document.getElementById('continue-btn').addEventListener('click', encounterRoom)
+    document.getElementById('replay-btn').addEventListener('click', init)
+  } else if (currentPlayerHealth === 0) {
+    while (mainGameArea.firstChild) {
+      mainGameArea.removeChild(mainGameArea.firstChild)
+    }
+    let deathMessage = document.createElement("div")
+    deathMessage.classList.add("player-death")
+    deathMessage.innerHTML =
+      `
+  <div class="message-container">
+  <h3>You lie dead before the ${currentEnemyName}. There are many more that seek to make their fortune in these depths, continue on and guide their story!
+  <button type="button" class="btn btn-primary" id = "replay-btn">Replay</button>
+  </div>
+  `
+    mainGameArea.appendChild(deathMessage)
+    document.getElementById('replay-btn').addEventListener('click', init)
+  } else return
 }
-if (currentPlayerHealth === 0){
+
+function encounterRoom() {
+  let enemy = getRandomEncounter()
+  currentEnemyName = enemy.name
+  currentEnemyHealth = enemy.health
+  currentEnemyLowAttack = enemy.lowAttackRange
+  currentEnemyHighAttack = enemy.highAttackRange
+  currentEnemyDefense = enemy.defense
   while (mainGameArea.firstChild) {
     mainGameArea.removeChild(mainGameArea.firstChild)
   }
-let deathMessage = document.createElement("div")
-  deathMessage.classList.add("player-death")
-  deathMessage.innerHTML = 
-  `
-  <div class="message-container">
-  <h3>You lie dead before the ${currentEnemyName}. There are many more that seek to make their fortune in these depths, continue on and guide their story!
-  <button type="button" class="btn btn-primary">Replay</button>
-  </div>
-  `
-  mainGameArea.appendChild(deathMessage) 
-}
+
+  if ([3, 7, 13, 15].includes(currentRoomsSurvived)) {
+    storyEvents()
+  } else if (currentEnemyName === "Treasure") {
+    treasureRoom()
+  } else {
+    let encounter = document.createElement("div")
+    encounter.classList.add("encounter")
+    encounter.innerHTML =
+      `
+    <div class = "encounter-container">
+    <h1>A ${currentEnemyName} rushes towrds you! Do you attack?</h1>
+    <h3> Health: ${currentEnemyHealth} Attack Range: ${currentEnemyLowAttack}-${currentEnemyHighAttack} Defense: ${currentEnemyDefense}</h3>
+    <button type="button" class="btn btn-primary" id = "fight-btn">Fight!</button>
+    <button type="button" class="btn btn-secondary" id = "flee-btn">Flee</button>
+    </div>
+    `
+    mainGameArea.appendChild(encounter)
+    document.getElementById('fight-btn').addEventListener('click', combatRoom)
+  }
 }
 
-function combat() {
-
+function combatRoom() {
+  while (mainGameArea.firstChild) {
+    mainGameArea.removeChild(mainGameArea.firstChild)
+  }
+  let combatOptions = document.createElement("div")
+  combatOptions.classList.add("combat")
+  combatOptions.innerHTML =
+    `
+  <h1>Intense Battle!!!!</h1>
+  `
+  mainGameArea.appendChild(combatOptions)
 }
 
 function damageToPlayer() {
@@ -150,11 +196,19 @@ function damageToEnemy() {
 }
 
 function treasureRoom() {
-
+  console.log('Treasure Found');
 }
 
 function storyEvents() {
-
+  if (currentRoomsSurvived === 3) {
+    console.log('first story event here');
+  } else if (currentRoomsSurvived === 7) {
+    console.log('Second story event here');
+  } else if (currentRoomsSurvived === 13) {
+    console.log('third story event here');
+  } else if (currentRoomsSurvived === 15) {
+    console.log("Boss Event Here!!!!!!");
+  }
 }
 
 
