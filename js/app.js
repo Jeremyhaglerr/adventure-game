@@ -1,13 +1,13 @@
 /*-------------------------------- Constants --------------------------------*/
 
-import { getRandomEncounter, fighter, ranger, optionalBoss, mainBoss } from "../data/reference-arrays.js"
+import { getRandomEncounter, fighter, rogue, optionalBoss, mainBoss } from "../data/reference-arrays.js"
 
 
 /*---------------------------- Variables (state) ----------------------------*/
 
 let currentPlayerHealth,
   currentPlayerLowAttack,
-  CurrentPlayerHighAttack,
+  currentPlayerHighAttack,
   currentPLayerDefense,
   currentPlayerPotions,
   currentRoomsSurvived
@@ -21,7 +21,7 @@ let currentEnemyName,
 
 /*------------------------ Cached Element References ------------------------*/
 
-const mainGameArea = document.getElementById('main-game-area')
+const mainGameArea = document.getElementById('main-game-card')
 const statBar = document.getElementById('current-stats')
 
 /*----------------------------- Event Listeners -----------------------------*/
@@ -37,7 +37,7 @@ function init() {//resets the player stats and calls displayClassChoices to disp
   }
   currentPlayerHealth = 0
   currentPlayerLowAttack = 0
-  CurrentPlayerHighAttack = 0
+  currentPlayerHighAttack = 0
   currentPLayerDefense = 0
   currentPlayerPotions = 0
   currentRoomsSurvived = 0
@@ -50,9 +50,9 @@ function classChoices() {//displays class choices for user to choose from and up
   classChoices.classList.add("class-choices")//adds class to div container
   classChoices.innerHTML = //sets the content of div container
     `
-  <h1>Choose Your Class</h1>
+  <h3 class="top-message">Choose Your Class<h3>
   <div id = "class-cards">
-  <div class="card fighter" style="width: 40rem;">
+  <div class="card fighter" style="width: 200rem;">
   <img src="assets/images/fighter-avatar.jpg" class="card-img-top" alt="Fighter with heavy armor and a longsword">
   <div class="card-body">
   <h5 class="card-title">${fighter.name}</h5>
@@ -60,29 +60,29 @@ function classChoices() {//displays class choices for user to choose from and up
   <a href="#" class="btn btn-primary" id = "fighter-btn">Choose Class</a>
   </div>
   </div>
-  <div class="card ranger" style="width: 40rem;">
-  <img src="assets/images/ranger.jpg" class="card-img-top" alt="Ranger with light armor and a bow">
+  <div class="card rogue" style="width: 200rem;">
+  <img src="assets/images/rogue-avatar.jpg" class="card-img-top" alt="Ranger with light armor and a bow">
   <div class="card-body">
-  <h5 class="card-title">${ranger.name}</h5>
-  <h6>Health:${ranger.health} Attack Range: ${ranger.lowAttackRange}-${ranger.highAttackRange} Defense: ${ranger.defense} Potions: ${ranger.potions}</h6>
-  <a href="#" class="btn btn-primary" id = "ranger-btn">Choose Class</a>
+  <h5 class="card-title">${rogue.name}</h5>
+  <h6>Health:${rogue.health} Attack Range: ${rogue.lowAttackRange}-${rogue.highAttackRange} Defense: ${rogue.defense} Potions: ${rogue.potions}</h6>
+  <a href="#" class="btn btn-primary" id = "rogue-btn">Choose Class</a>
   </div>
   </div>
   `
   mainGameArea.appendChild(classChoices)
-  document.getElementById('ranger-btn').addEventListener('click', (() => {
-    currentPlayerHealth = ranger.health
-    currentPlayerLowAttack = ranger.lowAttackRange
-    CurrentPlayerHighAttack = ranger.highAttackRange
-    currentPLayerDefense = ranger.defense
-    currentPlayerPotions = ranger.potions
+  document.getElementById('rogue-btn').addEventListener('click', (() => {
+    currentPlayerHealth = rogue.health
+    currentPlayerLowAttack = rogue.lowAttackRange
+    currentPlayerHighAttack = rogue.highAttackRange
+    currentPLayerDefense = rogue.defense
+    currentPlayerPotions = rogue.potions
     render()
     encounterRoom()
   }))
   document.getElementById('fighter-btn').addEventListener('click', (() => {
     currentPlayerHealth = fighter.health
     currentPlayerLowAttack = fighter.lowAttackRange
-    CurrentPlayerHighAttack = fighter.highAttackRange
+    currentPlayerHighAttack = fighter.highAttackRange
     currentPLayerDefense = fighter.defense
     currentPlayerPotions = fighter.potions
     render()
@@ -97,7 +97,7 @@ function render() {
   currentPlayerStats.innerHTML =
     `<div id = "current-stats-container">
   <div>Health: ${currentPlayerHealth}</div>
-  <div>Attack Range: ${currentPlayerLowAttack}-${CurrentPlayerHighAttack}</div>
+  <div>Attack Range: ${currentPlayerLowAttack}-${currentPlayerHighAttack}</div>
   <div>Defense: ${currentPLayerDefense}</div>
   <div>Potions: ${currentPlayerPotions}</div>
   <div>Rooms Survived: ${currentRoomsSurvived}</div>
@@ -119,9 +119,11 @@ function checkWin() {
     killEnemyMessage.innerHTML =
     `
     <div class="message-container">
-    <h3>The ${currentEnemyName} lies dead before you! Congratulations! Do you continue your adventure, or retreat to safety?
+    <h3 class="top-message">The ${currentEnemyName} lies dead before you! Congratulations! Do you continue your adventure, or retreat to safety?
+    <div class="btn-group">
     <button type="button" class="btn btn-primary" id = "continue-btn">Continue?</button>
     <button type="button" class="btn btn-danger" id = "replay-btn">Retreat?</button>
+    </div>
     </div>
     `
     mainGameArea.appendChild(killEnemyMessage)
@@ -137,8 +139,10 @@ function checkWin() {
     deathMessage.innerHTML =
       `
   <div class="message-container">
-  <h3>You lie dead before the ${currentEnemyName}. There are many more that seek to make their fortune in these depths, continue on and guide their story!
+  <h3 class ="top-message">You lie dead before the ${currentEnemyName}. There are many more that seek to make their fortune in these depths, continue on and guide their story!
+  <div class="btn-group">
   <button type="button" class="btn btn-primary" id = "replay-btn">Replay</button>
+  </div>
   </div>
   `
     mainGameArea.appendChild(deathMessage)
@@ -170,11 +174,13 @@ function encounterRoom() {
     encounter.innerHTML =
       `
     <div class = "encounter-container">
+    <h3 class="top-message">An angry ${currentEnemyName} rushes towrds you! Do you attack?</h1>
     <img id = "enemy-image" src = ${currentEnemyImage}>
-    <h1>An angry ${currentEnemyName} rushes towrds you! Do you attack?</h1>
     <h3> Health: ${currentEnemyHealth} Attack Range: ${currentEnemyLowAttack}-${currentEnemyHighAttack} Defense: ${currentEnemyDefense}</h3>
+    <div class="btn-group">
     <button type="button" class="btn btn-primary" id = "fight-btn">Fight!</button>
     <button type="button" class="btn btn-secondary" id = "flee-btn">Flee</button>
+    </div>
     </div>
     `
     mainGameArea.appendChild(encounter)
@@ -192,11 +198,14 @@ function combatRoom() {
   combatOptions.innerHTML =
     `
   <div id = "combat-container">
+  <h3 class="top-message">asdadasd</h3>
   <img id = "enemy-image" src = ${currentEnemyImage}>
   <h3> Health: ${currentEnemyHealth} Attack Range: ${currentEnemyLowAttack}-${currentEnemyHighAttack} Defense: ${currentEnemyDefense}</h3>
+  <div class="btn-group">
   <button type="button" class="btn btn-primary combat-btns" id="attack-btn">Attack</button>
   <button type="button" class="btn btn-secondary combat-btns" id="defend-btn">Defend</button>
   <button type="button" class="btn btn-success combat-btns" id="heal-btn">Heal</button>
+  </div>
   <button type="button" class="btn btn-danger flee" id="flee-btn">flee</button>
   </div>
   `
@@ -213,8 +222,16 @@ function damageToPlayer(evt) {
 }
 
 function damageToEnemy() {
-currentEnemyHealth = currentEnemyHealth - (Math.floor(Math.random() * (currentEnemyLowAttack - CurrentPlayerHighAttack + 1) + currentPlayerLowAttack))
-console.log(currentEnemyHealth);
+let fightMessage = document.querySelector(".top-message") 
+let enemyDamage =(Math.floor(Math.random() * (currentPlayerHighAttack - currentPlayerLowAttack + 1) + currentPlayerLowAttack))
+currentEnemyHealth = currentEnemyHealth - (enemyDamage-currentEnemyDefense)
+if (enemyDamage === 0) {
+fightMessage.innerHTML = ''  
+fightMessage.innerHTML = `The ${currentEnemyName} dodged your attack!`
+} else {
+fightMessage.innerHTML = ''  
+fightMessage.innerHTML = `You attack the ${currentEnemyName} for ${enemyDamage-currentEnemyDefense} Damage!`
+}
 checkWin()
 }
 
