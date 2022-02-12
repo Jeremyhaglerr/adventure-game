@@ -13,6 +13,7 @@ let currentPlayerHealth,
   currentRoomsSurvived
 
 let currentEnemyName,
+  currentEnemyImage,
   currentEnemyHealth,
   currentEnemyLowAttack,
   currentEnemyHighAttack,
@@ -144,7 +145,9 @@ function checkWin() {
 
 function encounterRoom() {
   let enemy = getRandomEncounter()
+  console.log(enemy);
   currentEnemyName = enemy.name
+  currentEnemyImage = enemy.image
   currentEnemyHealth = enemy.health
   currentEnemyLowAttack = enemy.lowAttackRange
   currentEnemyHighAttack = enemy.highAttackRange
@@ -163,7 +166,8 @@ function encounterRoom() {
     encounter.innerHTML =
       `
     <div class = "encounter-container">
-    <h1>A ${currentEnemyName} rushes towrds you! Do you attack?</h1>
+    <img id = "enemy-image" src = ${currentEnemyImage}>
+    <h1>An angry ${currentEnemyName} rushes towrds you! Do you attack?</h1>
     <h3> Health: ${currentEnemyHealth} Attack Range: ${currentEnemyLowAttack}-${currentEnemyHighAttack} Defense: ${currentEnemyDefense}</h3>
     <button type="button" class="btn btn-primary" id = "fight-btn">Fight!</button>
     <button type="button" class="btn btn-secondary" id = "flee-btn">Flee</button>
@@ -171,6 +175,7 @@ function encounterRoom() {
     `
     mainGameArea.appendChild(encounter)
     document.getElementById('fight-btn').addEventListener('click', combatRoom)
+    document.getElementById('flee-btn').addEventListener('click', encounterRoom)
   }
 }
 
@@ -182,17 +187,37 @@ function combatRoom() {
   combatOptions.classList.add("combat")
   combatOptions.innerHTML =
     `
-  <h1>Intense Battle!!!!</h1>
+  <div id = "combat-container">
+  <img id = "enemy-image" src = ${currentEnemyImage}>
+  <h3> Health: ${currentEnemyHealth} Attack Range: ${currentEnemyLowAttack}-${currentEnemyHighAttack} Defense: ${currentEnemyDefense}</h3>
+  <button type="button" class="btn btn-primary combat-btns" id="attack-btn">Attack</button>
+  <button type="button" class="btn btn-secondary combat-btns" id="defend-btn">Defend</button>
+  <button type="button" class="btn btn-success combat-btns" id="heal-btn">Heal</button>
+  <button type="button" class="btn btn-danger flee" id="flee-btn">flee</button>
+  </div>
   `
+
   mainGameArea.appendChild(combatOptions)
+  document.getElementById('attack-btn').addEventListener('click', damageToEnemy)
+  document.getElementById('defend-btn').addEventListener('click', damageToPlayer)
+  document.getElementById('heal-btn').addEventListener('click', healPlayer)
+  document.getElementById('flee-btn').addEventListener('click', playerFlee)
 }
 
-function damageToPlayer() {
+function damageToPlayer(evt) {
 
 }
 
 function damageToEnemy() {
 
+}
+
+function healPlayer() {
+
+}
+
+function playerFlee() {
+  encounterRoom()
 }
 
 function treasureRoom() {
