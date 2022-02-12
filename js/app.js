@@ -32,12 +32,16 @@ const statBar = document.getElementById('current-stats')
 
 init()
 function init() {//resets the player stats and calls displayClassChoices to display starting screen
+  while (mainGameArea.firstChild) {
+    mainGameArea.removeChild(mainGameArea.firstChild)
+  }
   currentPlayerHealth = 0
   currentPlayerLowAttack = 0
   CurrentPlayerHighAttack = 0
   currentPLayerDefense = 0
   currentPlayerPotions = 0
   currentRoomsSurvived = 0
+  render()
   classChoices()
 }
 
@@ -103,24 +107,23 @@ function render() {
     statBar.removeChild(statBar.lastChild)
     statBar.appendChild(currentPlayerStats)
   } else { statBar.appendChild(currentPlayerStats) }
-  checkWin()
 }
 
 function checkWin() {
-  if (currentEnemyHealth === 0) {
+  if (currentEnemyHealth <= 0) {
     while (mainGameArea.firstChild) {
       mainGameArea.removeChild(mainGameArea.firstChild)
     }
     let killEnemyMessage = document.createElement("div")
     killEnemyMessage.classList.add("defeat-enemy")
     killEnemyMessage.innerHTML =
-      `
-  <div class="message-container">
-  <h3>The ${currentEnemyName} lies dead before you! Congratulations! Do you continue your adventure, or retreat to safety?
-  <button type="button" class="btn btn-primary" id = "continue-btn">Continue?</button>
-  <button type="button" class="btn btn-danger" id = "replay-btn">Retreat?</button>
-  </div>
-  `
+    `
+    <div class="message-container">
+    <h3>The ${currentEnemyName} lies dead before you! Congratulations! Do you continue your adventure, or retreat to safety?
+    <button type="button" class="btn btn-primary" id = "continue-btn">Continue?</button>
+    <button type="button" class="btn btn-danger" id = "replay-btn">Retreat?</button>
+    </div>
+    `
     mainGameArea.appendChild(killEnemyMessage)
     currentRoomsSurvived = currentRoomsSurvived + 1
     document.getElementById('continue-btn').addEventListener('click', encounterRoom)
@@ -141,6 +144,7 @@ function checkWin() {
     mainGameArea.appendChild(deathMessage)
     document.getElementById('replay-btn').addEventListener('click', init)
   } else return
+  render()
 }
 
 function encounterRoom() {
@@ -209,7 +213,9 @@ function damageToPlayer(evt) {
 }
 
 function damageToEnemy() {
-
+currentEnemyHealth = currentEnemyHealth - (Math.floor(Math.random() * (currentEnemyLowAttack - CurrentPlayerHighAttack + 1) + currentPlayerLowAttack))
+console.log(currentEnemyHealth);
+checkWin()
 }
 
 function healPlayer() {
@@ -227,11 +233,11 @@ function treasureRoom() {
 function storyEvents() {
   if (currentRoomsSurvived === 3) {
     console.log('first story event here');
-  } else if (currentRoomsSurvived === 7) {
+  } else if (currentRoomsSurvived === 7) { 
     console.log('Second story event here');
-  } else if (currentRoomsSurvived === 13) {
+  } else if (currentRoomsSurvived === 13) { 
     console.log('third story event here');
-  } else if (currentRoomsSurvived === 15) {
+  } else if (currentRoomsSurvived === 15) {   
     console.log("Boss Event Here!!!!!!");
   }
 }
