@@ -320,7 +320,34 @@ function damageToEnemy() {
 }
 
 function healPlayer() {
+  let fightMessage = document.querySelector(".top-message")
+  let potionHealing = (Math.floor(Math.random() * (10 - 5 + 1) + 5))
+  if (currentPlayerPotions >= 1){
+  currentPlayerHealth = currentPlayerHealth + potionHealing
+  currentPlayerPotions = currentPlayerPotions - 1
+  fightMessage.innerHTML = ''
+  fightMessage.innerHTML =
+    `
+    You quickly drink one of your health potions and are healed for ${potionHealing} points!
+    <br>
+    You see wounds start to close before your eyes!
+    <br>
+    seeing an opening, the ${currentEnemyName} rushes you to Attack!
+    <button type="button" class="btn btn-secondary" id="continue-combat-btn">Continue</button>
+    `
+  } else if (currentPlayerPotions < 1) {
+  fightMessage.innerHTML = ''
+  fightMessage.innerHTML =
+    `
+    You reach for a health potion and realize you have none!
+    <br>
+    In your confusion, the ${currentEnemyName} readies an attack! 
 
+    <button type="button" class="btn btn-secondary" id="continue-combat-btn">Continue</button>
+    `
+  }
+render()
+document.getElementById('continue-combat-btn').addEventListener('click', damageToPlayer)
 }
 
 
