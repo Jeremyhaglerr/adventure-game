@@ -1,6 +1,6 @@
 /*-------------------------------- Constants --------------------------------*/
 
-import { getRandomEncounter, fighter, rogue, optionalBoss, mainBoss } from "../data/reference-arrays.js"
+import { getRandomEncounter, fighter, rogue, skeletonCommander, optionalBoss, mainBoss } from "../data/reference-arrays.js"
 
 
 /*---------------------------- Variables (state) ----------------------------*/
@@ -38,14 +38,14 @@ function init() {//resets the player stats and calls displayClassChoices to disp
   while (mainGameArea.firstChild) {
     mainGameArea.removeChild(mainGameArea.firstChild)
   }
-  currentPlayerHealth = 0
-  currentPlayerLowAttack = 0
-  currentPlayerHighAttack = 0
+  currentPlayerHealth = 100
+  currentPlayerLowAttack = 100
+  currentPlayerHighAttack = 100
   currentPlayerDefense = 0
   currentPlayerPotions = 0
-  currentRoomsSurvived = 0
+  currentRoomsSurvived = 3
   render()
-  classChoices()
+  storyEvents()
 }
 
 function classChoices() {//displays class choices for user to choose from and updates current player stats accordingly
@@ -131,7 +131,9 @@ function checkWin() {
       `
     mainGameArea.appendChild(killEnemyMessage)
     currentRoomsSurvived = currentRoomsSurvived + 1
-    document.getElementById('continue-btn').addEventListener('click', encounterRoom)
+    if (currentEnemyName === "Skeleton Commander" || currentEnemyName === "Lich" || currentEnemyName === "Uthvard the Giant King"){
+      document.getElementById('continue-btn').addEventListener('click', storyCombatWin)
+    } else { document.getElementById('continue-btn').addEventListener('click', encounterRoom)}
     document.getElementById('replay-btn').addEventListener('click', init)
   } else if (currentPlayerHealth <= 0) {
     while (mainGameArea.firstChild) {
@@ -414,8 +416,31 @@ function updatePotions(evt) {
 }
 
 function storyEvents() {
+  let storyRoomContent = document.createElement("div")
+  storyRoomContent.classList.add("story")
+  console.log('first story event here')
+  while (mainGameArea.firstChild) {
+    mainGameArea.removeChild(mainGameArea.firstChild)
+  }
   if (currentRoomsSurvived === 3) {
-    console.log('first story event here');
+    storyRoomContent.innerHTML =
+      `
+      <div id = "story-room-container">
+      <h3 class="top-message">You see a flailing explorer being dragged down a corridor by several skeletons! Do you follow down the side path, or leave the poor soul to his fate and continue on?</h3>
+      <div id = "firstStoryEventElements">
+      <br>
+      <br>
+      <div class="btn-group">
+      <button type="button" class="btn btn-secondary" id="follow-story-btn">Follow the side path</button>
+      <button type="button" class="btn btn-secondary" id="continue-btn">Continue On</button>
+      </div>
+      </div>
+      </div>
+      `
+    mainGameArea.appendChild(storyRoomContent)
+    document.getElementById("follow-story-btn").addEventListener('click', storyEventOne)
+    document.getElementById("continue-btn").addEventListener('click', encounterRoom)
+  
   } else if (currentRoomsSurvived === 7) {
     console.log('Second story event here');
   } else if (currentRoomsSurvived === 13) {
