@@ -449,4 +449,37 @@ function storyEvents() {
     console.log("Boss Event Here!!!!!!");
   }
 }
-
+function storyEventOne() {
+  let storyEventOneContent = document.createElement("div")
+  storyEventOneContent.classList.add("story")
+  console.log('first story event here')
+  while (mainGameArea.firstChild) {
+    mainGameArea.removeChild(mainGameArea.firstChild)
+  }
+  storyEventOneContent.innerHTML =
+      `
+      <div id = "story-room-container">
+      <h3 class="top-message">As you peer around a bend in the path, you see one of the skeletons cast a spell and a portion of the wall opens to reveal a secret passage. You realize that if you dont act now, both the life of the captured explorer and your potential access to this secret passage will be gone. Do you reveal yourself and fight, or do you favor caution and return to the main path?</h3>
+      <div id = "firstStoryEventElements">
+      <br>
+      <br>
+      <div class="btn-group">
+      <button type="button" class="btn btn-secondary" id="follow-story-btn">Fight</button>
+      <button type="button" class="btn btn-secondary" id="continue-btn">Go Back</button>
+      </div>
+      </div>
+      </div>
+      `
+      mainGameArea.appendChild(storyEventOneContent)
+    document.getElementById("follow-story-btn").addEventListener('click', storyCombatOne)
+    document.getElementById("continue-btn").addEventListener('click', encounterRoom)
+}
+function storyCombatOne(){
+  currentEnemyName = skeletonCommander.name
+  currentEnemyHealth = skeletonCommander.health
+  currentEnemyImage = skeletonCommander.image
+  currentEnemyLowAttack = skeletonCommander.lowAttackRange
+  currentEnemyHighAttack = skeletonCommander.highAttackRange
+  currentEnemyDefense = skeletonCommander.defense
+  combatRoom()
+}
