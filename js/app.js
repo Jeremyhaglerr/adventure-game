@@ -17,7 +17,10 @@ let currentEnemyName,
   currentEnemyHealth,
   currentEnemyLowAttack,
   currentEnemyHighAttack,
-  currentEnemyDefense
+  currentEnemyDefense,
+  treasureHasWeapon,
+  treasureHasArmor,
+  treasurePotions
 
 /*------------------------ Cached Element References ------------------------*/
 
@@ -159,6 +162,9 @@ function encounterRoom() {
   currentEnemyLowAttack = enemy.lowAttackRange
   currentEnemyHighAttack = enemy.highAttackRange
   currentEnemyDefense = enemy.defense
+  treasureHasWeapon = enemy.hasWeapon
+  treasureHasArmor = enemy.hasArmor
+  treasurePotions = enemy.potions
   while (mainGameArea.firstChild) {
     mainGameArea.removeChild(mainGameArea.firstChild)
   }
@@ -352,7 +358,59 @@ document.getElementById('continue-combat-btn').addEventListener('click', damageT
 
 
 function treasureRoom() {
-  console.log('Treasure Found');
+  while (mainGameArea.firstChild) {
+    mainGameArea.removeChild(mainGameArea.firstChild)
+  }
+  let treasureRoomContent = document.createElement("div")
+  treasureRoomContent.classList.add("treasure")
+  treasureRoomContent.innerHTML =
+    `
+    <div id = "treasure-room-container">
+    <h3 class="top-message">Treasure</h3>
+    <div id = "treasure-options">
+    <button type="button" class="btn btn-primary" id= "weapon-btn">${treasureHasWeapon}</button>
+    <button type="button" class="btn btn-secondary" id= "armor-btn">${treasureHasArmor}</button>
+    <button type="button" class="btn btn-success" id= "potion-btn">${treasurePotions}</button>
+    <br>
+    <br>
+    <button type="button" class="btn btn-secondary" id="continue-btn">Continue On</button>
+
+    </div>
+    </div>
+    `
+
+  mainGameArea.appendChild(treasureRoomContent)
+  document.getElementById('continue-btn').addEventListener('click', encounterRoom)
+  document.getElementById('weapon-btn').addEventListener('click', updateAttackRange)
+  document.getElementById('armor-btn').addEventListener('click', updateDefense)
+  document.getElementById('potion-btn').addEventListener('click', updatePotions) 
+}
+
+function updateAttackRange(evt) {
+  evt.target.style.visibility = "hidden"
+  if (treasureHasWeapon === false) {
+    return
+  } else {
+    currentPlayerLowAttack = treasureHasWeapon[0]
+    currentPlayerHighAttack = treasureHasWeapon[1]
+  }
+  render()
+}
+
+function updateDefense(evt) {
+  evt.target.style.visibility = "hidden"
+  if (treasureHasArmor === false) {
+    return
+  } else {
+    currentPlayerDefense = treasureHasArmor
+  }
+  render()
+}
+
+function updatePotions(evt) {
+  evt.target.style.visibility = "hidden"
+  currentPlayerPotions = currentPlayerPotions + treasurePotions
+  render()
 }
 
 function storyEvents() {
@@ -366,7 +424,4 @@ function storyEvents() {
     console.log("Boss Event Here!!!!!!");
   }
 }
-
-
-
 
