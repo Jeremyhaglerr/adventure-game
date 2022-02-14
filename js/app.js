@@ -38,14 +38,14 @@ function init() {//resets the player stats and calls displayClassChoices to disp
   while (mainGameArea.firstChild) {
     mainGameArea.removeChild(mainGameArea.firstChild)
   }
-  currentPlayerHealth = 100
-  currentPlayerLowAttack = 100
-  currentPlayerHighAttack = 100
+  currentPlayerHealth = 0
+  currentPlayerLowAttack = 0
+  currentPlayerHighAttack = 0
   currentPlayerDefense = 0
   currentPlayerPotions = 0
-  currentRoomsSurvived = 3
+  currentRoomsSurvived = 0
   render()
-  storyEvents()
+  classChoices()
 }
 
 function classChoices() {//displays class choices for user to choose from and updates current player stats accordingly
@@ -205,7 +205,7 @@ function combatRoom() {
   combatOptions.innerHTML =
     `
     <div id = "combat-container">
-    <h3 class="top-message">asdadasd</h3>
+    <h3 class="top-message">${currentEnemyName}</h3>
     <img id = "enemy-image" src = ${currentEnemyImage}>
     <h3> Health: ${currentEnemyHealth} Attack Range: ${currentEnemyLowAttack}-${currentEnemyHighAttack} Defense: ${currentEnemyDefense}</h3>
     <div class="btn-group">
@@ -474,6 +474,7 @@ function storyEventOne() {
     document.getElementById("follow-story-btn").addEventListener('click', storyCombatOne)
     document.getElementById("continue-btn").addEventListener('click', encounterRoom)
 }
+
 function storyCombatOne(){
   currentEnemyName = skeletonCommander.name
   currentEnemyHealth = skeletonCommander.health
@@ -482,4 +483,33 @@ function storyCombatOne(){
   currentEnemyHighAttack = skeletonCommander.highAttackRange
   currentEnemyDefense = skeletonCommander.defense
   combatRoom()
+}
+
+function storyCombatWin(){
+  if (currentEnemyName === 'Skeleton Commander') {
+    treasureHasWeapon = [10,18]
+    let storyEventOneAfterWinMessage = document.createElement("div")
+    storyEventOneAfterWinMessage.classList.add("story")
+    while (mainGameArea.firstChild) {
+    mainGameArea.removeChild(mainGameArea.firstChild)
+  }
+  storyEventOneAfterWinMessage.innerHTML =
+      `
+      <div id = "story-room-container">
+      <h3 class="top-message">As the ${currentEnemyName} crumbles into a disparate collection of bones and armor, you see the other remaining skeletons dissapear into the open space in the wall with the explorer in tow. You notice that the adventurer is no longer moving and must have succumbed to whatever wounds they sustained in battle before capture. The wall shuts behind them. You begin to examine the room and find the ${currentEnemyName}'s sword, which is razor sharp and deadly.Do you pick it up or leave well enough alone and move back to the main path.</h3>
+      <div id = "firstStoryEventElements">
+      <br>
+      <br>
+      <div class="btn-group">
+      <button type="button" class="btn btn-primary" id= "weapon-btn">Pick up Sword (Attack Range: ${treasureHasWeapon[0]}-${treasureHasWeapon[1]}) </button>
+      <button type="button" class="btn btn-secondary" id="continue-btn">Go Back</button>
+      </div>
+      </div>
+      </div>
+      `
+    console.log(treasureHasWeapon);
+    mainGameArea.appendChild(storyEventOneAfterWinMessage)
+    document.getElementById('weapon-btn').addEventListener('click', updateAttackRange)
+    document.getElementById('continue-btn').addEventListener('click', encounterRoom)
+  }
 }
