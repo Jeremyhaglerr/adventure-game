@@ -2,43 +2,41 @@
 
 const randomEncounters = [
   {
-    name:'Skeleton',
+    name:'Skeletal Soldier',
     health: 10,
+    image: "../assets/images/skeleton-fighter.jpg",
     lowAttackRange: 4,
     highAttackRange: 7,
-    defense: 3,
+    defense: 5,
   },
   {
-    name:'Zombie Fighter',
-    health: 12,
-    lowAttackRange: 5,
-    highAttackRange: 8,
-    defense:3,
-  },
-  {
-    name:'Zombie Mage',
+    name:'Rival Explorer Mage',
     health:8,
+    image:"../assets/images/rival-mage.jpg",
     lowAttackRange:6,
     highAttackRange:8,
     defense:2,
   },
   {
-    name:'Rival Explorer',
+    name:'Rival Explorer Knight',
+    image:"../assets/images/rival-warrior.jpg",
     health:10,
     lowAttackRange:4,
     highAttackRange:8,
-    defense:4,
+    defense:6,
   },
   {
-    name:'Ice Spider',
+    name:'Giant Vemonous Spider',
     health:6,
+    image:"../assets/images/giant-spider.jpg",
     lowAttackRange:4,
     highAttackRange:5,
     defense:2,
   },
   {
-    name:'Swarm of Bats',
+    name:'Wereboar',
     health:5,
+    image:"../assets/images/wereboar.jpg",
     lowAttackRange:2,
     highAttackRange:5,
     defense:5,
@@ -47,26 +45,37 @@ const randomEncounters = [
     name:'Treasure',
     hasWeapon: getWeaponChance(),
     hasArmor: getArmorChance(),
-    potion: getPotionNumber(),
+    potions: getPotionNumber(),
   }
 ]
 
 /*---------------------------- Game Objects ----------------------------*/
 
-const Fighter = {
+const fighter = {
   name: 'Fighter',
   health:20,
   lowAttackRange:6,
   highAttackRange:10,
-  defense:4
+  defense:4,
+  potions:2
 }
 
-const Ranger = {
-  name: 'Ranger',
+const rogue = {
+  name: 'Rogue',
   health:10,
   lowAttackRange:8,
   highAttackRange:14,
-  defense:4
+  defense:4,
+  potions:2
+}
+
+const skeletonCommander = {
+  name: 'Skeleton Commander',
+  health:12,
+  image:"../assets/images/skeleton-frenzied.jpg",
+  lowAttackRange:5,
+  highAttackRange:8,
+  defense:9,
 }
 
 const optionalBoss = {
@@ -115,12 +124,16 @@ function getRandomEncounter() {
   return randomEncounters[Math.floor(Math.random() *randomEncounters.length)]
 }
 
+/*---------------------------- Story Elements ----------------------------*/
+
+
 /*---------------------------- Exports ----------------------------*/
 
 export{
   getRandomEncounter,
-  Fighter,
-  Ranger,
+  fighter,
+  rogue,
+  skeletonCommander,
   optionalBoss,
   mainBoss
 }
