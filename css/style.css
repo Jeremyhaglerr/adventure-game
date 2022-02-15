@@ -18,37 +18,73 @@ html {
 }
 
 body {
-  background-image:url('../assets/images/main-background.jpg');
-  background-size: cover;
+  background-image:url('../assets/images/full-page-background.jpg');
+  background-size: 100%;
   /* Use a system font, if none are available use an available sans-sarif font */
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-        Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
   margin: 0;
+  align-items: center;
+  color: rgb(205,205,205);
 }
-nav {
+#current-stats-container {
   display: flex;
   justify-content: space-between;
   background-color: rgba(138, 135, 115, 0.637);
   height: fit-content;
+  padding: 0 5px;
   font-size: 3rem;
 }
-h1 {
-  text-align: center;
-  font-size: 6rem;
-  margin-top: 40px;
+#main-game-card {
+  background-color: #4F403D;
+  border: 5px solid black;
+  border-radius: 2%;
+  min-height: 80vh;
+  max-width: 60vw;
+  margin: 5% 20%
+
 }
 #class-cards {
   display: flex;
+  flex-wrap: nowrap;
   margin-top:10%;
   align-items: center;
   justify-content: center;
-  width: 100%;
 }
 
 
-#fighter-btn, #ranger-btn {
+#fighter-btn, #rogue-btn {
   align-items: center;
   justify-content: center;
   margin: 10px
 }
 
+#enemy-image {
+  height: 500px;
+  margin:10% 35% 10% 35%;
+  align-items: center;
+  justify-content: center;
+}
+.btn-group{
+display:flex;
+justify-content: space-between;
+background-color: rgba(138, 135, 115, 0.637);
+height: fit-content;
+padding: 0 5px;
+font-size: 1.2rem;
+width: 100%;
+}
+
+.top-message {
+  text-align: center;
+  height: fit-content;
+  margin:2% 20% 0 20%;
+  font-size: 6rem;
+}
+
+.combat-btns {
+  align-items: center;
+  justify-content: center;
+  margin:0% 35% 0% 35%;
+  height: fit-content;
+}

@@ -218,7 +218,6 @@ function combatRoom() {
     </div>
     </div>
     `
-
   mainGameArea.appendChild(combatOptions)
   document.getElementById('attack-btn').addEventListener('click', damageToEnemy)
   document.getElementById('defend-btn').addEventListener('click', damageToPlayer)
@@ -280,6 +279,7 @@ function damageToPlayer(evt) {
         <br>
         You ready yourself for your next action!
         `
+        document.querySelector('.btn-group').style.visibility = "visible"
 
     } else {
       currentPlayerHealth = currentPlayerHealth - (playerDamage - currentPlayerDefense)
@@ -290,9 +290,8 @@ function damageToPlayer(evt) {
         <br>
         You ready yourself for your next action!
         `
-
+        document.querySelector('.btn-group').style.visibility = "visible"
     }
-
   }
   render()
   checkWin()
@@ -301,7 +300,7 @@ function damageToPlayer(evt) {
 function damageToEnemy() {
   let fightMessage = document.querySelector(".top-message")
   let enemyDamage = (Math.floor(Math.random() * (currentPlayerHighAttack - currentPlayerLowAttack + 1) + currentPlayerLowAttack))
-
+  
   if ((enemyDamage - currentEnemyDefense) <= 0) {
     enemyDamage = 0
     fightMessage.innerHTML = ''
@@ -313,6 +312,7 @@ function damageToEnemy() {
       <br>
       <button type="button" class="btn btn-secondary" id="continue-combat-btn">Continue</button>
       `
+      
   } else {
     currentEnemyHealth = currentEnemyHealth - (enemyDamage - currentEnemyDefense)
     fightMessage.innerHTML = ''
@@ -325,6 +325,8 @@ function damageToEnemy() {
       <button type="button" class="btn btn-secondary" id="continue-combat-btn">Continue</button>
       `
   }
+  document.querySelector('.btn-group').style.visibility = "hidden"
+
   render()
   checkWin()
   document.getElementById('continue-combat-btn').addEventListener('click', damageToPlayer)
