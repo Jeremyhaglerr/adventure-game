@@ -10,7 +10,7 @@ let currentPlayerHealth,
   currentPlayerHighAttack,
   currentPlayerDefense,
   currentPlayerPotions,
-  currentRoomsSurvived
+  currentRoomsExplored
 
 let currentEnemyName,
   currentEnemyImage,
@@ -31,7 +31,7 @@ const statBar = document.getElementById('current-stats')
 
 
 
-/*-------------------------------- Functions --------------------------------*/
+/*-------------------------------- General Functions --------------------------------*/
 
 init()
 function init() {//resets the player stats and calls displayClassChoices to display starting screen
@@ -43,7 +43,7 @@ function init() {//resets the player stats and calls displayClassChoices to disp
   currentPlayerHighAttack = 0
   currentPlayerDefense = 0
   currentPlayerPotions = 0
-  currentRoomsSurvived = 0
+  currentRoomsExplored = 0
   render()
   classChoices()
 }
@@ -103,7 +103,7 @@ function render() {
     <div>Attack Range: ${currentPlayerLowAttack}-${currentPlayerHighAttack}</div>
     <div>Defense: ${currentPlayerDefense}</div>
     <div>Potions: ${currentPlayerPotions}</div>
-    <div>Rooms Survived: ${currentRoomsSurvived}</div>
+    <div>Rooms Explored: ${currentRoomsExplored}</div>
     </div>
     `
   if (statBar.hasChildNodes) {
@@ -130,7 +130,6 @@ function checkWin() {
       </div>
       `
     mainGameArea.appendChild(killEnemyMessage)
-    currentRoomsSurvived = currentRoomsSurvived + 1
     if (currentEnemyName === "Skeleton Commander" || currentEnemyName === "Lich" || currentEnemyName === "Uthvard the Giant King"){
       document.getElementById('continue-btn').addEventListener('click', storyCombatWin)
     } else { document.getElementById('continue-btn').addEventListener('click', encounterRoom)}
@@ -156,6 +155,8 @@ function checkWin() {
 }
 
 function encounterRoom() {
+  currentRoomsExplored = currentRoomsExplored + 1
+  render()
   let enemy = getRandomEncounter()
   console.log(enemy);
   currentEnemyName = enemy.name
@@ -171,7 +172,7 @@ function encounterRoom() {
     mainGameArea.removeChild(mainGameArea.firstChild)
   }
 
-  if ([3, 7, 13, 15].includes(currentRoomsSurvived)) {
+  if ([3, 7, 9, 15].includes(currentRoomsExplored)) {
     storyEvents()
   } else if (currentEnemyName === "Treasure") {
     treasureRoom()
@@ -195,6 +196,8 @@ function encounterRoom() {
     document.getElementById('flee-btn').addEventListener('click', damageToPlayer)
   }
 }
+
+/*------------------------ Combat functions ------------------------*/
 
 function combatRoom() {
   while (mainGameArea.firstChild) {
@@ -358,6 +361,7 @@ render()
 document.getElementById('continue-combat-btn').addEventListener('click', damageToPlayer)
 }
 
+/*------------------------ Treasure functions ------------------------*/
 
 function treasureRoom() {
   while (mainGameArea.firstChild) {
@@ -380,7 +384,7 @@ function treasureRoom() {
     </div>
     </div>
     `
-
+  currentRoomsExplored = currentRoomsExplored + 1
   mainGameArea.appendChild(treasureRoomContent)
   document.getElementById('continue-btn').addEventListener('click', encounterRoom)
   document.getElementById('weapon-btn').addEventListener('click', updateAttackRange)
@@ -415,14 +419,15 @@ function updatePotions(evt) {
   render()
 }
 
+/*------------------------ Story Functions ------------------------*/
+
 function storyEvents() {
   let storyRoomContent = document.createElement("div")
   storyRoomContent.classList.add("story")
-  console.log('first story event here')
   while (mainGameArea.firstChild) {
     mainGameArea.removeChild(mainGameArea.firstChild)
   }
-  if (currentRoomsSurvived === 3) {
+  if (currentRoomsExplored === 3) {
     storyRoomContent.innerHTML =
       `
       <div id = "story-room-container">
@@ -437,22 +442,136 @@ function storyEvents() {
       </div>
       </div>
       `
+      currentRoomsExplored = currentRoomsExplored + 1
     mainGameArea.appendChild(storyRoomContent)
     document.getElementById("follow-story-btn").addEventListener('click', storyEventOne)
     document.getElementById("continue-btn").addEventListener('click', encounterRoom)
   
-  } else if (currentRoomsSurvived === 7) {
-    console.log('Second story event here');
-  } else if (currentRoomsSurvived === 13) {
-    console.log('third story event here');
-  } else if (currentRoomsSurvived === 15) {
-    console.log("Boss Event Here!!!!!!");
+  } else if (currentRoomsExplored === 7) {
+    storyRoomContent.innerHTML =
+      `
+      <div id = "story-room-container">
+      <h3 class="top-message">As you enter the room you see a figure slumped in the far corner across from the door onwards. Do you sneak past the figure in an attempt to avoid another fight or approach and investigate the figure? </h3>
+      <div id = "StoryEventElements">
+      <br>
+      <br>
+      <div class="btn-group">
+      <button type="button" class="btn btn-secondary" id="continue-btn">Sneak Past</button>
+      <button type="button" class="btn btn-secondary" id="follow-story-btn">Investigate</button>
+      </div>
+      </div>
+      </div>
+      `
+    mainGameArea.appendChild(storyRoomContent)
+    document.getElementById("follow-story-btn").addEventListener('click', storyEventTwo)
+    document.getElementById("continue-btn").addEventListener('click', encounterRoom)
+  } else if (currentRoomsExplored === 9) {
+    storyRoomContent.innerHTML =
+    `
+    <div id = "story-room-container">
+    <h3 class="top-message">You come to a fork in the path and pause to assess your options. To the left, you hear distant chanting and the pained screams of what you can only assume is other explorers. If you step close to the entrance, you can sense a thick aura of magic that seems to sap the life force from you on contact. To the right, you see a similar path that you have been travelling thus far complete with the distant sounds of enemies and challenges ahead. </h3>
+    <div id = "StoryEventElements">
+    <br>
+    <br>
+    <div class="btn-group">
+    <button type="button" class="btn btn-secondary" id="follow-story-btn">Go left</button>
+    <button type="button" class="btn btn-secondary" id="continue-btn">Continue Right</button>
+    </div>
+    </div>
+    </div>
+    `
+  mainGameArea.appendChild(storyRoomContent)
+  document.getElementById("follow-story-btn").addEventListener('click', storyEventThree)
+  document.getElementById("continue-btn").addEventListener('click', encounterRoom)
+  } else if (currentRoomsExplored === 15) {
+    storyRoomContent.innerHTML =
+    `
+    <div id = "story-room-container">
+    <h3 class="top-message">As you leave the previous room and step through the door, you find yourself in the crumbled remains of a great hall. Tattered banners hang from the walls and massive columns that once stood sturdy now crumbled and clutter the sides of the room. at the far end you see a massive throne and the skeleton of what you assume to be the Giant King still sitting atop it. No danger is immediately apparent in the room so you begin to search through the rubble in search of anthing valuable left. You continue this search until you near the throne, you see the king's goblet wedged beneath some rubble and lean in to grab it. As you do, you hear a cracking above you, you recoil to see the gigantic Skeleton of the King begin to collect itself, grab its massive sword and begin to stand. You turn to run toward the exit, but the king hurls a piece of their throne over you into the archway supporting the entrance to the hall. The archway crumbles into itself blocking the exit. You have no other option but to turn and face the shambling remains of the king. Prepare yourself!  </h3>
+    <div id = "toryEventElements">
+    <br>
+    <br>
+    <div class="btn-group">
+    <button type="button" class="btn btn-secondary" id="follow-story-btn">Fight</button>
+    </div>
+    </div>
+    </div>
+    `
+  mainGameArea.appendChild(storyRoomContent)
+  document.getElementById("follow-story-btn").addEventListener('click', bossCombat)
+
   }
 }
+function storyCombatWin(){
+  let storyEventAfterWinMessage = document.createElement("div")
+  storyEventAfterWinMessage.classList.add("story")
+  while (mainGameArea.firstChild) {
+  mainGameArea.removeChild(mainGameArea.firstChild)
+  }
+  if (currentEnemyName === 'Skeleton Commander') {
+    treasureHasWeapon = [10,18]
+    storyEventAfterWinMessage.innerHTML =
+      `
+      <div id = "story-room-container">
+      <h3 class="top-message">As the ${currentEnemyName} crumbles into a disparate collection of bones and armor, you see the other remaining skeletons dissapear into the open space in the wall with the explorer in tow. You notice that the adventurer is no longer moving and must have succumbed to whatever wounds they sustained in battle before capture. The wall shuts behind them. You begin to examine the room and find the ${currentEnemyName}'s sword, which is razor sharp and deadly.Do you pick it up or leave well enough alone and move back to the main path.</h3>
+      <div id = "StoryEventElements">
+      <br>
+      <br>
+      <div class="btn-group">
+      <button type="button" class="btn btn-primary" id= "weapon-btn">Pick up Sword (Attack Range: ${treasureHasWeapon[0]}-${treasureHasWeapon[1]}) </button>
+      <button type="button" class="btn btn-secondary" id="continue-btn">Go Back</button>
+      </div>
+      </div>
+      </div>
+      `
+    mainGameArea.appendChild(storyEventAfterWinMessage)
+    document.getElementById('weapon-btn').addEventListener('click', updateAttackRange)
+    document.getElementById('continue-btn').addEventListener('click', encounterRoom)
+  } else if (currentEnemyName === "Lich") {
+    storyEventAfterWinMessage.innerHTML =
+      `
+      <div id = "story-room-container">
+      <h3 class="top-message">You slash into the ${currentEnemyName} with all of your might and watch as the figure begins to twist and contort from pain. you see the ${currentEnemyName} dried skin begin to flake and fall off as the figure slowly turns to dust in front of you. as you are regaining your breath and surveying your surroundings, you see a heavy door on the far side of the room with scratch marks and blood trailing beyond it on the floor. You sense things will get harder if you continue. Do you continue on this path or go back to the path you were on before?</h3>
+      <div id = "StoryEventElements">
+      <br>
+      <br>
+      <div class="btn-group">
+      <button type="button" class="btn btn-primary" id= "continue-btn">Continue Deeper</button>
+      <button type="button" class="btn btn-secondary" id="go-back-btn">Go Back</button>
+      </div>
+      </div>
+      </div>
+      `
+    mainGameArea.appendChild(storyEventAfterWinMessage)
+    document.getElementById('continue-btn').addEventListener('click', goToNextChapter)
+    document.getElementById("go-back-btn").addEventListener('click', encounterRoom)
+  } else if (currentEnemyName === "Uthvard the Giant King") {
+    storyEventAfterWinMessage.innerHTML =
+      `
+      <div id = "story-room-container">
+      <h3 class="top-message">The massive size of the Giant King is imposing at first, but then as you continue fighting you notice that many of the bones that made up the king's remains were cracked and breaking at certain points. You use this to your advantage and aim for the weakspots and eventually the king crumbles under his own weight, falling to the floor. As you regain your breath realizing that the danger has passed, you begin to survey the room in earnest. The king's body itself is enough of an artifact to set yourself up for life if you go back now. As you continue to search, more out of burning off the remaining adrenaline than actually searching you notice a crumbling portion of the wall towards the rear of the hall that reveals another massive hallway beyond. do you choose to return to the surface victorious in your efforts, or do you continue to search and see what mysteries lie deeper in the caves and dungeons below? </h3>
+      <div id = "firstStoryEventElements">
+      <br>
+      <br>
+      <div class="btn-group">
+      <button type="button" class="btn btn-primary" id= "continue-btn">Continue</button>
+      <button type="button" class="btn btn-secondary" id="go-back-btn">Go Back To The Surface</button>
+      </div>
+      </div>
+      </div>
+      `
+    mainGameArea.appendChild(storyEventAfterWinMessage)
+    document.getElementById('continue-btn').addEventListener('click', goToNextChapter)
+    document.getElementById("go-back-btn").addEventListener('click', init)
+    
+  }
+}
+
+/*------------------------ Story Event One Helper Functions ------------------------*/
+
 function storyEventOne() {
   let storyEventOneContent = document.createElement("div")
   storyEventOneContent.classList.add("story")
-  console.log('first story event here')
   while (mainGameArea.firstChild) {
     mainGameArea.removeChild(mainGameArea.firstChild)
   }
@@ -460,7 +579,7 @@ function storyEventOne() {
       `
       <div id = "story-room-container">
       <h3 class="top-message">As you peer around a bend in the path, you see one of the skeletons cast a spell and a portion of the wall opens to reveal a secret passage. You realize that if you dont act now, both the life of the captured explorer and your potential access to this secret passage will be gone. Do you reveal yourself and fight, or do you favor caution and return to the main path?</h3>
-      <div id = "firstStoryEventElements">
+      <div id = "StoryEventElements">
       <br>
       <br>
       <div class="btn-group">
@@ -485,31 +604,126 @@ function storyCombatOne(){
   combatRoom()
 }
 
-function storyCombatWin(){
-  if (currentEnemyName === 'Skeleton Commander') {
-    treasureHasWeapon = [10,18]
-    let storyEventOneAfterWinMessage = document.createElement("div")
-    storyEventOneAfterWinMessage.classList.add("story")
-    while (mainGameArea.firstChild) {
+/*------------------------ Story Event Two Helper Functions ------------------------*/
+function storyEventTwo() {
+  let storyEventTwoContent = document.createElement("div")
+  storyEventTwoContent.classList.add("story")
+  while (mainGameArea.firstChild) {
     mainGameArea.removeChild(mainGameArea.firstChild)
   }
-  storyEventOneAfterWinMessage.innerHTML =
+  storyEventTwoContent.innerHTML =
       `
       <div id = "story-room-container">
-      <h3 class="top-message">As the ${currentEnemyName} crumbles into a disparate collection of bones and armor, you see the other remaining skeletons dissapear into the open space in the wall with the explorer in tow. You notice that the adventurer is no longer moving and must have succumbed to whatever wounds they sustained in battle before capture. The wall shuts behind them. You begin to examine the room and find the ${currentEnemyName}'s sword, which is razor sharp and deadly.Do you pick it up or leave well enough alone and move back to the main path.</h3>
-      <div id = "firstStoryEventElements">
+      <h3 class="top-message">As you carefully approach the figure slumped in the room, you see that the figure is humanoid and moving slightly. The figure sits up as they notice you, startled the figure guards themselves and pleads "Please, I've only just survived the path ahead. I have nothing of value!" It would be easy to end their life, it appears they are only barely clinging onto it as is. Do you end their life so they cannot possibly attack you as you exit the room, or do you lower your guard and approach the figure?</h3>
+      <div id = "StoryEventElements">
       <br>
       <br>
       <div class="btn-group">
-      <button type="button" class="btn btn-primary" id= "weapon-btn">Pick up Sword (Attack Range: ${treasureHasWeapon[0]}-${treasureHasWeapon[1]}) </button>
-      <button type="button" class="btn btn-secondary" id="continue-btn">Go Back</button>
+      <button type="button" class="btn btn-secondary" id="continue-btn">Kill the figure!</button>
+      <button type="button" class="btn btn-secondary" id="follow-story-btn">Approach peacefully</button>
       </div>
       </div>
       </div>
       `
-    console.log(treasureHasWeapon);
-    mainGameArea.appendChild(storyEventOneAfterWinMessage)
-    document.getElementById('weapon-btn').addEventListener('click', updateAttackRange)
-    document.getElementById('continue-btn').addEventListener('click', encounterRoom)
+      mainGameArea.appendChild(storyEventTwoContent)
+    document.getElementById("follow-story-btn").addEventListener('click', storyEventTwoPartTwo)
+    document.getElementById("continue-btn").addEventListener('click', encounterRoom)
+}
+
+function storyEventTwoPartTwo() {
+  let storyEventTwoPartTwoContent = document.createElement("div")
+  storyEventTwoPartTwoContent.classList.add("story")
+  while (mainGameArea.firstChild) {
+    mainGameArea.removeChild(mainGameArea.firstChild)
   }
+  storyEventTwoPartTwoContent.innerHTML =
+      `
+      <div id = "story-room-container">
+      <h3 class="top-message">The figure thanks you for your benevolence and relaxes their guard. They tell you they were captured and taken to a chamber up the path from here. They tell of a horrible magical experimentation chamber and of the undead mage that called this chmaber his domain. They say that all manner of magical items were taken in and out of the rooms beyond the chamber. The explorer explains that if they were better equipped, they might have attempted to kill the Mage and take their fortune waiting beyond, but the best they could do was escape their bindings and make it to here. They thank you for your benevolence and for clearing the path out to safety. they raise and limp their way towards the surface.</h3>
+      <div id = "StoryEventElements">
+      <br>
+      <br>
+      <div class="btn-group">
+      <button type="button" class="btn btn-secondary" id="continue-btn">Continue On</button>
+      </div>
+      </div>
+      </div>
+      `
+      currentRoomsExplored = currentRoomsExplored + 1
+      mainGameArea.appendChild(storyEventTwoPartTwoContent)
+    document.getElementById("continue-btn").addEventListener('click', encounterRoom)
+}
+
+/*------------------------ Story Event Three Helper Functions ------------------------*/
+
+function storyEventThree() {
+  let storyEventOneContent = document.createElement("div")
+  storyEventOneContent.classList.add("story")
+  while (mainGameArea.firstChild) {
+    mainGameArea.removeChild(mainGameArea.firstChild)
+  }
+  storyEventOneContent.innerHTML =
+      `
+      <div id = "story-room-container">
+      <h3 class="top-message">You cautiously creep into the left corridor, every instinct is telling you to got back, but you presson. As the pathway widens you find yourself in a horrific magical laboratory, experiments and test subjects of all kinds scattered around the room. in the center, with its back to you looking across a cluttered desk, you see a figure hovering a few inches off of the ground and studying something. as you approach, a voice snakes its way into your head, "Ahh, we have another brave soul come to seek their fortune...or did you come to cleanse this terrible place of monsters. Either way, I always appreciate new test subjects." Your eyes shut tight as a ringing fills your head, only to open to see the figure standing above you, posed to attack! </h3>
+      <div id = "StoryEventElements">
+      <br>
+      <br>
+      <div class="btn-group">
+      <button type="button" class="btn btn-secondary" id="follow-story-btn">Fight!</button>
+      </div>
+      </div>
+      </div>
+      `
+      mainGameArea.appendChild(storyEventOneContent)
+    document.getElementById("follow-story-btn").addEventListener('click', storyThreeCombat)
+}
+
+function storyThreeCombat(){
+  currentEnemyName = optionalBoss.name
+  currentEnemyHealth = optionalBoss.health
+  currentEnemyImage = optionalBoss.image
+  currentEnemyLowAttack = optionalBoss.lowAttackRange
+  currentEnemyHighAttack = optionalBoss.highAttackRange
+  currentEnemyDefense = optionalBoss.defense
+  combatRoom()
+}
+
+/*------------------------ Main Chapter One Boss Helper Functions ------------------------*/
+
+function bossCombat(){
+  currentEnemyName = mainBoss.name
+  currentEnemyHealth = mainBoss.health
+  currentEnemyImage = mainBoss.image
+  currentEnemyLowAttack = mainBoss.lowAttackRange
+  currentEnemyHighAttack = mainBoss.highAttackRange
+  currentEnemyDefense = mainBoss.defense
+  combatRoom()
+}
+
+
+/*------------------------ Next Chapter Helper Functions ------------------------*/
+
+
+function goToNextChapter() {
+  let NextChapterContent = document.createElement("div")
+  NextChapterContent.classList.add("story")
+  while (mainGameArea.firstChild) {
+    mainGameArea.removeChild(mainGameArea.firstChild)
+  }
+  NextChapterContent.innerHTML =
+      `
+      <div id = "story-room-container">
+      <h3 class="top-message">Thank You For Playing this game thus far, this is the finish of the first chapter of "The Giant King's Catacombs" and the second chapter is yet to come! Replay this chapter and choose other options and see what events may unfold!</h3>
+      <div id = "StoryEventElements">
+      <br>
+      <br>
+      <div class="btn-group">
+      <button type="button" class="btn btn-secondary" id="follow-story-btn">Replay</button>
+      </div>
+      </div>
+      </div>
+      `
+      mainGameArea.appendChild(NextChapterContent)
+    document.getElementById("follow-story-btn").addEventListener('click', init)
 }

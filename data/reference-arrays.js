@@ -81,6 +81,7 @@ const skeletonCommander = {
 const optionalBoss = {
   name: 'Lich',
   health:20,
+  image: '../assets/images/lich.jpg',
   lowAttackRange:10,
   highAttackRange:14,
   defense:5
@@ -89,6 +90,7 @@ const optionalBoss = {
 const mainBoss = {
 name: 'Uthvard the Giant King',
 health:30,
+image: "../assets/images/skeletal-giant-king.jpg" ,
 lowAttackRange:8,
 highAttackRange: 14,
 defense:5
