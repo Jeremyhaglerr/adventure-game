@@ -54,15 +54,17 @@ const randomEncounters = [
 const fighter = {
   name: 'Fighter',
   health:20,
-  lowAttackRange:6,
+  image: "../assets/images/fighter-avatar.jpg",
+  lowAttackRange:8,
   highAttackRange:10,
-  defense:4,
+  defense:5,
   potions:2
 }
 
 const rogue = {
   name: 'Rogue',
-  health:10,
+  health:15,
+  image:"../assets/images/rogue-avatar.jpg",
   lowAttackRange:8,
   highAttackRange:14,
   defense:4,
@@ -75,7 +77,7 @@ const skeletonCommander = {
   image:"../assets/images/skeleton-frenzied.jpg",
   lowAttackRange:5,
   highAttackRange:8,
-  defense:9,
+  defense:6,
 }
 
 const optionalBoss = {
