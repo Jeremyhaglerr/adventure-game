@@ -69,18 +69,6 @@ body {
   margin: 15%
 }
 
-#left-card {
-
-  /* animation: backInLeft;
-  animation-duration: 2s; */
-}
-
-#right-card {
-
-  /* animation: backInRight;
-  animation-duration: 2s; */
-}
-
 .card-inner-area {
   border: 2px solid black;
   margin: 1px;
