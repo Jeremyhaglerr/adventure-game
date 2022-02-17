@@ -14,20 +14,24 @@ html {
 /* resets font size to be 62.5% of the user preference - 
      in most browser configurations this will be 10px */
 :root {
-  font-size: 62.5%;
+  font-size: 24px;
 }
-
 body {
   background-image:url('../assets/images/full-page-background.jpg');
+  font-family: 'Redressed', cursive;
   background-attachment: fixed;
   background-size: cover;
   display: flex;
   flex-direction: column;
-  padding: 2% 20%;
+  justify-content:center;
+  align-items: center;
+  padding: 1% 20%;
   margin: 0px;
+  max-height: 1250px;
+
 }
 
-h3 {
+.top-message {
   background-color: rgb(109, 104, 105);
   display: flex;
   justify-content:center;
@@ -35,16 +39,25 @@ h3 {
   padding: 2%;
   border: 10px solid rgb(0, 0, 0);
   border-radius: 6px;
+  height: 200px;
+  min-width: 1200px;
+  max-width: 1600px;
+  flex-wrap: wrap;
+  font-size: 2.5rem;
+  font-weight: bold;
 }
 #main-game-area {
-  /* border: 10px solid rgb(0, 0, 0);
+  border: 10px solid rgb(0, 0, 0);
   border-radius: 6px;
-  background-color:rgba(84, 66, 64, 0.924) ; */
+  background-color:rgba(84, 66, 64, 0.924) ;
   display: flex;
   justify-content:center;
   align-items: center;
   padding: 20px;
-  margin-top: 5%
+  margin-top: 2%;
+  overflow: hidden;
+  height: 900px;
+  width: 1200px;
 }
 
 .card {
@@ -53,16 +66,17 @@ h3 {
   border-radius: 6px;
   min-width: fit-content;
   min-height: fit-content;
+  margin: 15%
 }
 
 #left-card {
-  margin-right: 15%;
+
   /* animation: backInLeft;
   animation-duration: 2s; */
 }
 
 #right-card {
-  margin-left: 15%;
+
   /* animation: backInRight;
   animation-duration: 2s; */
 }
@@ -72,8 +86,8 @@ h3 {
   margin: 1px;
 }
 .card-image{
-  width: 300px;
-  height: 370px;
+  width: 338px;
+  height: 420px;
 }
 
 img{
@@ -107,11 +121,14 @@ color: white;
 
 
 .btn-group {
+  position: relative;
   border: 10px solid rgb(0, 0, 0);
-  border-radius: 6px;
-  margin: 5%;
+  border-radius: 16px;
+  margin: 2%;
   align-self: center;
-
-
+  flex-wrap: wrap;
+  min-height: 75px;
+  max-height: fit-content;
+  width: 600px;
 }
 
