@@ -2,17 +2,13 @@ html {
   box-sizing: border-box
 }
 
-/* The Universal Selector */
-*, /* All elements*/
-*::before, /* All ::before pseudo-elements */
-*::after { /* All ::after pseudo-elements */
-  /* height & width will now include border & padding by default
-     but can be over-ridden as needed */
+*, 
+*::before, 
+*::after {
+
   box-sizing: inherit;
 }
 
-/* resets font size to be 62.5% of the user preference - 
-     in most browser configurations this will be 10px */
 :root {
   font-size: 24px;
 }
@@ -79,17 +75,17 @@ body {
 }
 
 img{
-left: 50%;
-position: relative;
-top: 50%;
-transform: translate(-50%, -50%);
-max-height: 100%;
-max-width: 100%;
+  left: 50%;
+  position: relative;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  max-height: 100%;
+  max-width: 100%;
 }
 
 .card-name, .card-stats, .card-about {
-background-color: #61504c;
-color: white;
+  background-color: #61504c;
+  color: white;
 }
 
 .card-name{
