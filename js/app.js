@@ -30,8 +30,13 @@ let currentEnemyName,
 const mainGameArea = document.getElementById('main-game-area')
 const topMessage = document.querySelector('.top-message')
 const btnGroup = document.querySelector('.btn-group')
+const attack = new Audio('../assets/Sounds/sword-swing.wav');
+const heal = new Audio('../assets/Sounds/heal.wav');
+const playerDeath = new Audio('../assets/Sounds/player-death.wav');
+const enemyDeath = new Audio('../assets/Sounds/enemy-death.wav');
+const win = new Audio('../assets/Sounds/win.wav');
+const treasure = new Audio('../assets/Sounds/treasure.wav');
 
-const rightCard = document.getElementById('right-card')
 
 /*----------------------------- Event Listeners -----------------------------*/
 
@@ -175,6 +180,8 @@ function render() {
 
 function checkWin() {
   if (currentEnemyHealth <= 0) {
+    enemyDeath.play()
+    enemyDeath.volume = 0.5
     const rightCard = document.getElementById('right-card')
     rightCard.classList.add('animate__animated', 'animate__backOutRight')
     topMessage.innerHTML =
@@ -194,6 +201,8 @@ function checkWin() {
     }
     document.getElementById('replay-btn').addEventListener('click', init)
   } else if (currentPlayerHealth <= 0) {
+    playerDeath.play()
+    playerDeath.volume = 0.5
     const leftCard = document.getElementById('left-card')
     leftCard.classList.add('animate__animated', 'animate__backOutLeft')
     topMessage.innerHTML =
@@ -266,7 +275,11 @@ function combatRoom() {
 }
 
 function damageToPlayer(evt) {
-
+  heal.pause()
+  attack.pause()
+  attack.play()
+  attack.currentTime = 0
+  attack.volume = 0.5
   let playerDamage = (Math.floor(Math.random() * (currentEnemyHighAttack - currentEnemyLowAttack + 1) + currentEnemyLowAttack))
   if (evt.target.id === 'defend-btn') {
     if ((playerDamage - (currentPlayerDefense + 2)) <= 0) {
@@ -333,6 +346,11 @@ function damageToPlayer(evt) {
 }
 
 function damageToEnemy() {
+  heal.pause()
+  attack.pause()
+  attack.play()
+  attack.currentTime = 0
+  attack.volume = 0.5
   let enemyDamage = (Math.floor(Math.random() * (currentPlayerHighAttack - currentPlayerLowAttack + 1) + currentPlayerLowAttack))
   if ((enemyDamage - currentEnemyDefense) <= 0) {
     enemyDamage = 0
@@ -367,6 +385,10 @@ function damageToEnemy() {
 }
 
 function healPlayer() {
+  attack.pause()
+  heal.play()
+  heal.currentTime = 0
+  heal.volume = 0.5
   let potionHealing = (Math.floor(Math.random() * (10 - 5 + 1) + 5))
   if (currentPlayerPotions >= 1) {
     currentPlayerHealth = currentPlayerHealth + potionHealing
@@ -404,6 +426,10 @@ function healPlayer() {
 /*------------------------ Treasure functions ------------------------*/
 
 function treasureRoom() {
+  treasure.pause()
+  treasure.play()
+  treasure.currentTime = 0
+  treasure.volume = 0.5
   topMessage.innerHTML =
     `
     You enter a storage room and rifle around to see if there is anything worthwhile. Do you take anything? 
@@ -428,8 +454,8 @@ function treasureRoom() {
     `
   btnGroup.innerHTML =
     `
-    <button type="button" class="btn btn-danger" id= "weapon-btn">Weapon: ${treasureHasWeapon}</button>
-    <button type="button" class="btn btn-warning" id= "armor-btn">Armor: ${treasureHasArmor}</button>
+    <button type="button" class="btn btn-danger" id= "weapon-btn">Weapon: Attack Range (${treasureHasWeapon})</button>
+    <button type="button" class="btn btn-warning" id= "armor-btn">Armor: Defense (${treasureHasArmor})</button>
     <button type="button" class="btn btn-primary" id= "potion-btn">Potions: ${treasurePotions}</button>
     <button type="button" class="btn btn-secondary" id="continue-btn">Continue On</button>
     `
@@ -716,6 +742,8 @@ function bossCombat() {
 
 
 function goToNextChapter() {
+  win.play()
+  win.volume = 0.5
   topMessage.innerHTML =
     `
     Thank You For Playing this game! More games and more adventure are yet to come! Replay this chapter of the story and choose other options and see what events may unfold!
