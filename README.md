@@ -3,7 +3,7 @@
 
 ---
 ## Description
->       The Giant King's Catacombs is a nod to the classic "choose your own adventure" games with pseudo-roguelike elements throughout. The game is cenetered around turn-based combat with a randomly generated list of encounters, as well as several scripted events at points throughout the adventure. Completing challenging encounters may unlock powerful new weapons, or provide new paths for the story to continue.
+The Giant King's Catacombs is a nod to the classic "choose your own adventure" games with pseudo-roguelike elements throughout. The game is cenetered around turn-based combat with a randomly generated list of encounters, as well as several scripted events at points throughout the adventure. Completing challenging encounters may unlock powerful new weapons, or provide new paths for the story to continue.
 ---
 [**Play The Game**](https://giant-kings-catacombs.surge.sh/)
 
@@ -41,7 +41,7 @@ Planned Icebox Features
 - [ ] Difficulty settings
 - [ ] Leveling system
 - [ ] Additional Enemies
-- [ ] randomized messages for damage, healing, win, and loss
+- [ ] Randomized messages for damage, healing, win, and loss
 - [ ] Additional branching story elements
 - [ ] Refactor treasure to include unique items
 - [ ] Inventory system
