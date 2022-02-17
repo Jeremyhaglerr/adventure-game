@@ -3,39 +3,39 @@
 const randomEncounters = [
   {
     name:'Skeletal Soldier',
-    health: 10,
+    health: 12,
     image: "../assets/images/skeleton-fighter.jpg",
-    lowAttackRange: 4,
+    lowAttackRange: 5,
     highAttackRange: 7,
     defense: 5,
   },
   {
     name:'Rival Explorer Mage',
-    health:8,
+    health:12,
     image:"../assets/images/rival-mage.jpg",
-    lowAttackRange:6,
-    highAttackRange:8,
-    defense:2,
+    lowAttackRange:8,
+    highAttackRange:10,
+    defense:3,
   },
   {
     name:'Rival Explorer Knight',
     image:"../assets/images/rival-warrior.jpg",
-    health:10,
-    lowAttackRange:4,
-    highAttackRange:8,
-    defense:6,
+    health:15,
+    lowAttackRange:7,
+    highAttackRange:9,
+    defense:5,
   },
   {
     name:'Giant Vemonous Spider',
-    health:6,
+    health:14,
     image:"../assets/images/giant-spider.jpg",
     lowAttackRange:4,
-    highAttackRange:5,
+    highAttackRange:7,
     defense:2,
   },
   {
     name:'Wereboar',
-    health:5,
+    health:18,
     image:"../assets/images/wereboar.jpg",
     lowAttackRange:2,
     highAttackRange:5,
@@ -65,41 +65,45 @@ const rogue = {
   name: 'Rogue',
   health:15,
   image:"../assets/images/rogue-avatar.jpg",
-  lowAttackRange:8,
+  lowAttackRange:10,
   highAttackRange:14,
-  defense:4,
-  potions:2
+  defense:3,
+  potions:4
 }
 
 const skeletonCommander = {
   name: 'Skeleton Commander',
-  health:12,
+  health:25,
   image:"../assets/images/skeleton-frenzied.jpg",
-  lowAttackRange:5,
+  lowAttackRange:7,
   highAttackRange:8,
-  defense:6,
+  defense:5,
 }
 
 const optionalBoss = {
   name: 'Lich',
-  health:20,
+  health:35,
   image: '../assets/images/lich.jpg',
   lowAttackRange:10,
-  highAttackRange:14,
-  defense:5
+  highAttackRange:18,
+  defense:4
 }
 
 const mainBoss = {
 name: 'Uthvard the Giant King',
-health:30,
+health:40,
 image: "../assets/images/skeletal-giant-king.jpg" ,
 lowAttackRange:8,
-highAttackRange: 14,
-defense:5
+highAttackRange: 18,
+defense:7
 }
 
 /*---------------------------- Value Generators ----------------------------*/
 
+function getRandomEncounter() {
+
+  return randomEncounters[Math.floor(Math.random() *randomEncounters.length)]
+}
 function getWeaponChance() {
   let weaponChance= [true, false, false]
   let lowDamage = [1,2,3,4,5,6,7,8,9]
@@ -124,17 +128,17 @@ function getPotionNumber() {
 }
 
 
-function getRandomEncounter() {
-  return randomEncounters[Math.floor(Math.random() *randomEncounters.length)]
-}
 
-/*---------------------------- Story Elements ----------------------------*/
+/*---------------------------- Other Story Elements ----------------------------*/
 
 
 /*---------------------------- Exports ----------------------------*/
 
 export{
   getRandomEncounter,
+  getWeaponChance,
+  getArmorChance,
+  getPotionNumber,
   fighter,
   rogue,
   skeletonCommander,
