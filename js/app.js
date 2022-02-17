@@ -1,6 +1,16 @@
 /*-------------------------------- Constants --------------------------------*/
 
-import { getRandomEncounter, getWeaponChance, getArmorChance, getPotionNumber, fighter, rogue, skeletonCommander, optionalBoss, mainBoss } from "../data/reference-arrays.js"
+import { 
+  getRandomEncounter, 
+  getWeaponChance, 
+  getArmorChance, 
+  getPotionNumber, 
+  fighter, 
+  rogue, 
+  skeletonCommander, 
+  optionalBoss, 
+  mainBoss 
+} from "../data/reference-arrays.js"
 
 
 /*---------------------------- Variables (state) ----------------------------*/
@@ -13,7 +23,9 @@ let
   currentPlayerHighAttack,
   currentPlayerDefense,
   currentPlayerPotions,
+  currentPlayerAbout,
   currentRoomsExplored
+  
 
 let currentEnemyName,
   currentEnemyImage,
@@ -61,7 +73,8 @@ function classChoices() {
   topMessage.style.overflowWrap = null
   mainGameArea.style.display = null
   topMessage.innerHTML = `Choose your Class`
-  mainGameArea.innerHTML = `
+  mainGameArea.innerHTML = 
+    `
     <div class="card animate__animated animate__backInLeft" id="left-card">
       <div class="card-inner-area">
         <div class="card-image"><img src=${fighter.image} alt=""></div>
@@ -73,7 +86,7 @@ function classChoices() {
           potions:${fighter.potions}
         </div>
         <div class="card-about">
-          "Break their bones, take what remains"
+          ${fighter.about}
         </div>
       </div>
     </div>
@@ -88,17 +101,16 @@ function classChoices() {
           potions:${rogue.potions}
         </div>
         <div class="card-about">
-          "Combat is a dance and I always lead"
+          ${rogue.about}
         </div>
       </div>
     </div>
-  </div>
-`
+    `
   btnGroup.innerHTML =
     `
-  <button type="button" class="btn btn-danger" id="fighter-btn" >Fighter</button>
-  <button type="button" class="btn btn-warning" id="rogue-btn" >Rogue</button>
-`
+    <button type="button" class="btn btn-danger" id="fighter-btn" >Fighter</button>
+    <button type="button" class="btn btn-warning" id="rogue-btn" >Rogue</button>
+    `
   document.getElementById('rogue-btn').addEventListener('click', (() => {
     currentEnemyName = rogue.name
     currentPlayerHealth = rogue.health
@@ -107,6 +119,7 @@ function classChoices() {
     currentPlayerHighAttack = rogue.highAttackRange
     currentPlayerDefense = rogue.defense
     currentPlayerPotions = rogue.potions
+    currentPlayerAbout = rogue.about
     render()
     encounterRoom()
   }))
@@ -118,6 +131,7 @@ function classChoices() {
     currentPlayerHighAttack = fighter.highAttackRange
     currentPlayerDefense = fighter.defense
     currentPlayerPotions = fighter.potions
+    currentPlayerAbout = fighter.about
     render()
     encounterRoom()
   }))
@@ -139,12 +153,8 @@ function render() {
     `
     <div class="card" id="left-card">
       <div class="card-inner-area">
-        <div class="card-image">
-          <img src=${currentPlayerImage} alt="">
-        </div>
-        <div class="card-name">
-          ${currentPlayerName}
-        </div>
+        <div class="card-image"><img src=${currentPlayerImage} alt=""></div>
+        <div class="card-name">${currentPlayerName}</div>
         <div class="card-stats">
           health:${currentPlayerHealth}<br>
           AttackRange:${currentPlayerLowAttack}-${currentPlayerHighAttack}<br>
@@ -152,18 +162,14 @@ function render() {
           potions:${currentPlayerPotions}
         </div>
         <div class="card-about">
-          "Break their bones, take what remains"
+          ${currentPlayerAbout}
         </div>
       </div>
     </div>
     <div class="card" id="right-card">
       <div class="card-inner-area">
-        <div class="card-image">
-        <img src=${currentEnemyImage} alt="">
-      </div>
-        <div class="card-name">
-          ${currentEnemyName}
-        </div>
+        <div class="card-image"><img src=${currentEnemyImage} alt=""></div>
+        <div class="card-name">${currentEnemyName}</div>
         <div class="card-stats">
           health:${currentEnemyHealth}<br>
           Attack Range:${currentEnemyLowAttack}-${currentPlayerHighAttack}<br>
@@ -171,7 +177,7 @@ function render() {
           <br>
         </div>
         <div class="card-about">
-          "Combat is a dance and I always lead"
+          ${currentEnemyAbout}
         </div>
       </div>
     </div>
@@ -227,9 +233,11 @@ function encounterRoom() {
   currentEnemyLowAttack = enemy.lowAttackRange
   currentEnemyHighAttack = enemy.highAttackRange
   currentEnemyDefense = enemy.defense
+  currentEnemyAbout = enemy.about
   treasureHasWeapon = getWeaponChance()
   treasureHasArmor = getArmorChance()
   treasurePotions = getPotionNumber()
+
 
   if ([3, 7, 9, 15].includes(currentRoomsExplored)) {
     storyEvents()
@@ -238,8 +246,8 @@ function encounterRoom() {
   } else {
     topMessage.innerHTML =
       `
-    A ${currentEnemyName} approaches from the darkness! Do you attack, or attempt to flee?
-    `
+      A ${currentEnemyName} approaches from the darkness! Do you attack, or attempt to flee?
+      `
     render()
     btnGroup.innerHTML =
       `
@@ -260,8 +268,8 @@ function encounterRoom() {
 function combatRoom() {
   topMessage.innerHTML =
     `
-  Ready Yourself!
-  `
+    Ready Yourself!
+    `
   btnGroup.innerHTML =
     `
     <button type="button" class="btn btn-danger combat-btns" id="attack-btn">Attack</button>
@@ -333,10 +341,10 @@ function damageToPlayer(evt) {
       combatRoom()
       topMessage.innerHTML =
         `
-      The ${currentEnemyName} attacks you for ${playerDamage - currentPlayerDefense} Damage!
-      <br>
-      You ready yourself for your next action!
-      `
+        The ${currentEnemyName} attacks you for ${playerDamage - currentPlayerDefense} Damage!
+        <br>
+        You ready yourself for your next action!
+        `
     }
   }
   render()
@@ -356,26 +364,26 @@ function damageToEnemy() {
     enemyDamage = 0
     topMessage.innerHTML =
       `
-    The ${currentEnemyName} dodged your attack! 
-    <br>
-    They pivot and come in for an attack!
-    `
+      The ${currentEnemyName} dodged your attack! 
+      <br>
+      They pivot and come in for an attack!
+      `
     btnGroup.innerHTML =
       `
-    <button type="button" class="btn btn-secondary" id="continue-combat-btn">Continue</button>
-    `
+      <button type="button" class="btn btn-secondary" id="continue-combat-btn">Continue</button>
+      `
   } else {
     currentEnemyHealth = currentEnemyHealth - (enemyDamage - currentEnemyDefense)
     topMessage.innerHTML =
       `
-    You attack the ${currentEnemyName} for ${enemyDamage - currentEnemyDefense} Damage!
-    <br>
-    They lunge at you to Retaliate!
-    `
+      You attack the ${currentEnemyName} for ${enemyDamage - currentEnemyDefense} Damage!
+      <br>
+      They lunge at you to Retaliate!
+      `
     btnGroup.innerHTML =
       `
-    <button type="button" class="btn btn-secondary" id="continue-combat-btn">Continue</button>
-    `
+      <button type="button" class="btn btn-secondary" id="continue-combat-btn">Continue</button>
+      `
   }
   render()
   const leftCard = document.getElementById('left-card')
@@ -395,27 +403,27 @@ function healPlayer() {
     currentPlayerPotions = currentPlayerPotions - 1
     topMessage.innerHTML =
       `
-    You quickly drink one of your health potions and are healed for ${potionHealing} points!
-    <br>
-    You see wounds start to close before your eyes!
-    <br>
-    seeing an opening, the ${currentEnemyName} rushes you to Attack!
-    `
+      You quickly drink one of your health potions and are healed for ${potionHealing} points!
+      <br>
+      You see wounds start to close before your eyes!
+      <br>
+      seeing an opening, the ${currentEnemyName} rushes you to Attack!
+      `
     btnGroup.innerHTML =
       `
-    <button type="button" class="btn btn-secondary" id="continue-combat-btn">Continue</button>
-    `
+      <button type="button" class="btn btn-secondary" id="continue-combat-btn">Continue</button>
+      `
   } else if (currentPlayerPotions < 1) {
     topMessage.innerHTML =
       `
-    You reach for a health potion and realize you have none!
-    <br>
-    In your confusion, the ${currentEnemyName} readies an attack! 
-    `
+      You reach for a health potion and realize you have none!
+      <br>
+      In your confusion, the ${currentEnemyName} readies an attack! 
+      `
     btnGroup.innerHTML =
       `
-    <button type="button" class="btn btn-secondary" id="continue-combat-btn">Continue</button>
-    `
+      <button type="button" class="btn btn-secondary" id="continue-combat-btn">Continue</button>
+      `
   }
   render()
   const leftCard = document.getElementById('left-card')
@@ -432,7 +440,7 @@ function treasureRoom() {
   treasure.volume = 0.5
   topMessage.innerHTML =
     `
-    You enter a storage room and rifle around to see if there is anything worthwhile. Do you take anything? 
+    You enter a storage room and search to see if there is anything worthwhile. Do you take anything? 
     `
   mainGameArea.innerHTML =
     `
@@ -584,7 +592,7 @@ function storyCombatWin() {
   } else if (currentEnemyName === "Lich") {
     topMessage.innerHTML =
       `
-      You slash into the ${currentEnemyName} with all of your might and watch as the figure begins to twist and contort from pain. you see the ${currentEnemyName} dried skin begin to flake and fall off as the figure slowly disintegrates in front of you. as you are regaining your breath and surveying your surroundings, you see a heavy door on the far side of the room with scratch marks and blood trailing beyond it on the floor. You sense things will get harder if you continue. Do you continue on this path or go back to the path you were on before?
+      You slash into the ${currentEnemyName} with all of your might and watch as the figure begins to twist and contort from pain. you see the ${currentEnemyName} dried skin begin to flake and fall off as the figure slowly disintegrates in front of you. as you are regaining your breath and surveying your surroundings, you see a heavy door on the far side of the room with scratch marks and blood trailing beyond it on the floor. As you approach the door, whispers claw at your mind, calling you forward. Do you continue on this path or go back to the path you were on before?
       `
     topMessage.style.height = '1200px'
     topMessage.style.overflow = 'auto'
@@ -746,7 +754,7 @@ function goToNextChapter() {
   win.volume = 0.5
   topMessage.innerHTML =
     `
-    Thank You For Playing this game! More games and more adventure are yet to come! Replay this chapter of the story and choose other options and see what events may unfold!
+    Thank You For Playing this game! More games and more adventure are yet to come! Replay this story and choose other options and see what events may unfold!
     `
   topMessage.style.height = '1200px'
   topMessage.style.overflow = 'auto'
@@ -790,10 +798,12 @@ function liveComfortable() {
     <button type="button" class="btn btn-danger" id="replay-btn">Replay?</button>
     `
   document.getElementById("replay-btn").addEventListener('click', init)
-  document.getElementById("follow-story2-btn").addEventListener('click', goToNextChapter)
+  document.getElementById("follow-story2-btn").addEventListener('click', goToNextChapterSurvival)
 
 }
+function goToNextChapterSurvival() {
 
+}
 /*------------------------  Main Screen Functions ------------------------*/
 
 function GameStart() {
@@ -801,10 +811,10 @@ function GameStart() {
     `
     The Giant King's Catacombs 
     `
-    topMessage.style.height = '1200px'
-    topMessage.style.overflow = 'auto'
-    topMessage.style.overflowWrap = 'word break'
-    mainGameArea.style.display = 'none'
+  topMessage.style.height = '1200px'
+  topMessage.style.overflow = 'auto'
+  topMessage.style.overflowWrap = 'word break'
+  mainGameArea.style.display = 'none'
   btnGroup.innerHTML =
     `
     <button type="button" class="btn btn-danger" id="play-btn">Delve into the Darkness</button>
