@@ -23,7 +23,7 @@ body {
   align-items: center;
   padding: 1% 20%;
   margin: 0px;
-  max-height: 1250px;
+  max-height: 100vh;
 
 }
 
@@ -32,14 +32,13 @@ body {
   display: flex;
   justify-content:center;
   align-items: center;
-  padding: 2%;
+  padding: 0 1%;
   border: 10px solid rgb(0, 0, 0);
   border-radius: 6px;
   height: 200px;
-  min-width: 1200px;
-  max-width: 1600px;
+  min-width: 60vw;
   flex-wrap: wrap;
-  font-size: 2.5rem;
+  font-size: 2rem;
   font-weight: bold;
 }
 
@@ -54,7 +53,7 @@ body {
   margin-top: 2%;
   overflow: hidden;
   height: 900px;
-  width: 1200px;
+  width: 60vw;
 }
 
 .card {
@@ -63,7 +62,7 @@ body {
   border-radius: 6px;
   min-width: fit-content;
   min-height: fit-content;
-  margin: 15%
+  margin: 20px
 }
 
 .card-inner-area {
@@ -114,6 +113,42 @@ img{
   flex-wrap: wrap;
   min-height: 75px;
   max-height: fit-content;
-  width: 600px;
+  min-width: 20vw;
 }
 
+@media screen and (max-width:1400px), (max-height:1070px){
+  :root {
+    font-size: 16px;
+  }
+
+  .top-message{
+    width: 90vw;
+    overflow: auto;
+  }
+  #main-game-area {
+    width:90vw
+
+  }
+}
+
+@media screen and (max-width:950px), (max-height:950px) {
+  :root {
+    font-size: 16px;
+  }
+
+  .top-message {
+    width: 90vw;
+    overflow: auto;
+  }
+
+  #main-game-area {
+    width:90vw;
+    flex-direction: column;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+  .card {
+  top: 30%;
+  margin:1% 1%;
+  }
+}
