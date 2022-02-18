@@ -8,7 +8,7 @@ const randomEncounters = [
     lowAttackRange: 5,
     highAttackRange: 7,
     defense: 5,
-    about: `"A lost soul cursed to fight"`
+    about: `"A lost soul cursed to fight eternally"`
   },
   {
     name: 'Rival Explorer Mage',
@@ -44,7 +44,7 @@ const randomEncounters = [
     lowAttackRange: 2,
     highAttackRange: 5,
     defense: 5,
-    about: `"A long forgotten experiment left to roam"`
+    about: `"A long forgotten monster left to roam"`
   },
   {
     name: 'Treasure',
@@ -75,7 +75,7 @@ const rogue = {
   highAttackRange: 14,
   defense: 3,
   potions: 4,
-  about: `"Its hard to hit with a knife in your back"`
+  about: `"The best defense is a knife in the back"`
 }
 
 const skeletonCommander = {
