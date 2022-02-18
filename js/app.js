@@ -160,10 +160,10 @@ function render() {
         <div class="card-image"><img src=${currentPlayerImage} alt=""></div>
         <div class="card-name">${currentPlayerName}</div>
         <div class="card-stats">
-          health: ${currentPlayerHealth}<br>
+          Health: ${currentPlayerHealth}<br>
           Attack: ${currentPlayerLowAttack}-${currentPlayerHighAttack}<br>
-          defense: ${currentPlayerDefense}<br>
-          potions: ${currentPlayerPotions}
+          Defense: ${currentPlayerDefense}<br>
+          Potions: ${currentPlayerPotions}
         </div>
         <div class="card-about">
           ${currentPlayerAbout}
@@ -175,9 +175,9 @@ function render() {
         <div class="card-image"><img src=${currentEnemyImage} alt=""></div>
         <div class="card-name">${currentEnemyName}</div>
         <div class="card-stats">
-          health: ${currentEnemyHealth}<br>
+          Health: ${currentEnemyHealth}<br>
           Attack: ${currentEnemyLowAttack}-${currentEnemyHighAttack}<br>
-          defense: ${currentEnemyDefense}<br>
+          Defense: ${currentEnemyDefense}<br>
           <br>
         </div>
         <div class="card-about">
@@ -199,7 +199,7 @@ function checkWin() {
       `
     btnGroup.innerHTML =
       `
-      <button type="button" class="btn btn-secondary" id = "continue-btn">Continue?</button>
+      <button type="button" class="btn btn-secondary" id = "continue-btn">Continue</button>
 
       `
     if (currentEnemyName === "Skeleton Commander" || currentEnemyName === "Lich" || currentEnemyName === "Uthvard the Giant King") {
@@ -451,10 +451,10 @@ function treasureRoom() {
         <div class="card-image"><img src=${currentPlayerImage} alt=""></div>
         <div class="card-name">${currentPlayerName}</div>
         <div class="card-stats">
-          health: ${currentPlayerHealth}<br>
+          Health: ${currentPlayerHealth}<br>
           AttackRange: ${currentPlayerLowAttack}-${currentPlayerHighAttack}<br>
-          defense: ${currentPlayerDefense}<br>
-          potions: ${currentPlayerPotions}
+          Defense: ${currentPlayerDefense}<br>
+          Potions: ${currentPlayerPotions}
         </div>
         <div class="card-about">
          ${currentPlayerAbout}
@@ -852,6 +852,7 @@ function gameStart() {
       <div class="modal-body">
       Welcome to The Giant King's Catacombs! In this game you will battle numerous enemies and find powerful treasures. Below are explanations of all of the statistics in the game as well as an overview of the combat buttons and their functions.
       <br>
+      <br>
       <span>Health</span> = The current health of the player or enemy that it is attached to.
       <br>
       <span>Attack</span> = The range of damage that the player or enemy is capable of doing.
@@ -861,7 +862,7 @@ function gameStart() {
       <span>Potions</span> = A potion of healing that heals 1-4 health back to the player
       <br>
       <br>
-      <button type="button" class="btn btn-warning" id="flee-btn" >Flee</button> = flee the current room, the current enemy will have a chance to amke one attack against you
+      <button type="button" class="btn btn-warning" id="flee-btn" >Flee</button> = Flee the current room, the current enemy will have a chance to make one attack against you
       <br>
       <button type="button" class="btn btn-danger combat-btns" id="attack-btn">Attack</button> = Attack the current enemy 
       <br>
