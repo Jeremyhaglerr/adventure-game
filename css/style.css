@@ -116,6 +116,11 @@ img{
   min-width: 20vw;
 }
 
+span {
+  font-weight: bold;
+  text-decoration: underline;
+}
+
 @media screen and (max-width:1400px), (max-height:1070px){
   :root {
     font-size: 16px;
