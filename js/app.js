@@ -113,7 +113,7 @@ function classChoices() {
     <button type="button" class="btn btn-warning" id="rogue-btn" >Rogue</button>
     `
   document.getElementById('rogue-btn').addEventListener('click', (() => {
-    currentEnemyName = rogue.name
+    currentPlayerName = rogue.name
     currentPlayerHealth = rogue.health
     currentPlayerImage = rogue.image
     currentPlayerLowAttack = rogue.lowAttackRange
@@ -200,7 +200,6 @@ function checkWin() {
     btnGroup.innerHTML =
       `
       <button type="button" class="btn btn-secondary" id = "continue-btn">Continue?</button>
-      <button type="button" class="btn btn-danger" id = "replay-btn">Retreat?</button>
 
       `
     if (currentEnemyName === "Skeleton Commander" || currentEnemyName === "Lich" || currentEnemyName === "Uthvard the Giant King") {
@@ -208,7 +207,6 @@ function checkWin() {
     } else {
       document.getElementById('continue-btn').addEventListener('click', encounterRoom)
     }
-    document.getElementById('replay-btn').addEventListener('click', init)
 
   } else if (currentPlayerHealth <= 0 && currentEnemyName === 'Lich') {
     endlessWander()
@@ -591,7 +589,7 @@ function storyEventsCombatWin() {
       <button type="button" class="btn btn-danger" id= "weapon-btn">Pick up Armor? (Defense: ${treasureHasArmor}) </button>
       <button type="button" class="btn btn-secondary" id="continue-btn">Go Back</button>
       `
-    document.getElementById('weapon-btn').addEventListener('click', updateAttackRange)
+    document.getElementById('weapon-btn').addEventListener('click', updateDefense)
     document.getElementById('continue-btn').addEventListener('click', encounterRoom)
   } else if (currentEnemyName === "Lich") {
     treasureHasWeapon = [10,18]
@@ -843,7 +841,43 @@ function gameStart() {
   mainGameArea.style.display = 'none'
   btnGroup.innerHTML =
     `
-    <button type="button" class="btn btn-danger" id="play-btn">Delve into the Darkness</button>
-    `
+    <button type="button" class="btn btn-danger" id="play-btn" data-bs-toggle="modal" data-bs-target="#exampleModal">Delve into the Darkness</button>
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">How To Play</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      Welcome to The Giant King's Catacombs! In this game you will battle numerous enemies and find powerful treasures. Below are explanations of all of the statistics in the game as well as an overview of the combat buttons and their functions.
+      <br>
+      <span>Health</span> = The current health of the player or enemy that it is attached to.
+      <br>
+      <span>Attack</span> = The range of damage that the player or enemy is capable of doing.
+      <br>
+      <span>Defense</span> = The amount of damage that will be deducted from the enemy or player's attack
+      <br>
+      <span>Potions</span> = A potion of healing that heals 1-4 health back to the player
+      <br>
+      <br>
+      <button type="button" class="btn btn-warning" id="flee-btn" >Flee</button> = flee the current room, the current enemy will have a chance to amke one attack against you
+      <br>
+      <button type="button" class="btn btn-danger combat-btns" id="attack-btn">Attack</button> = Attack the current enemy 
+      <br>
+      <button type="button" class="btn btn-warning combat-btns" id="defend-btn">Defend</button> = Temporarily add 2 to player's defense for the enemy's next attack
+      <br>
+      <button type="button" class="btn btn-primary combat-btns" id="heal-btn">Heal</button> = Use one potion to heal player
+      <br>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+`
   document.getElementById("play-btn").addEventListener('click', classChoices)
 }
+
+
