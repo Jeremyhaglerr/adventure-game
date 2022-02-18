@@ -4,7 +4,7 @@ const randomEncounters = [
   {
     name: 'Skeletal Soldier',
     health: 12,
-    image: "../assets/images/skeleton-fighter.jpg",
+    image: "../assets/images/skeleton-fighter-2.jpg",
     lowAttackRange: 5,
     highAttackRange: 7,
     defense: 5,
@@ -13,7 +13,7 @@ const randomEncounters = [
   {
     name: 'Rival Explorer Mage',
     health: 12,
-    image: "../assets/images/rival-mage.jpg",
+    image: "../assets/images/rival-mage-2.jpg",
     lowAttackRange: 8,
     highAttackRange: 10,
     defense: 3,
@@ -21,7 +21,7 @@ const randomEncounters = [
   },
   {
     name: 'Rival Explorer Knight',
-    image: "../assets/images/rival-warrior.jpg",
+    image: "../assets/images/rival-warrior-2.jpg",
     health: 15,
     lowAttackRange: 7,
     highAttackRange: 9,
@@ -31,7 +31,7 @@ const randomEncounters = [
   {
     name: 'Giant Vemonous Spider',
     health: 14,
-    image: "../assets/images/giant-spider.jpg",
+    image: "../assets/images/giant-spider-2.jpg",
     lowAttackRange: 4,
     highAttackRange: 7,
     defense: 2,
@@ -40,9 +40,9 @@ const randomEncounters = [
   {
     name: 'Wereboar',
     health: 18,
-    image: "../assets/images/wereboar.jpg",
-    lowAttackRange: 2,
-    highAttackRange: 5,
+    image: "../assets/images/wereboar-2.jpg",
+    lowAttackRange: 5,
+    highAttackRange: 8,
     defense: 5,
     about: `"A long forgotten monster left to roam"`
   },
@@ -59,7 +59,7 @@ const randomEncounters = [
 const fighter = {
   name: 'Fighter',
   health: 20,
-  image: "../assets/images/fighter-avatar.jpg",
+  image: "../assets/images/fighter-avatar-2.jpg",
   lowAttackRange: 8,
   highAttackRange: 10,
   defense: 5,
@@ -70,7 +70,7 @@ const fighter = {
 const rogue = {
   name: 'Rogue',
   health: 15,
-  image: "../assets/images/rogue-avatar.jpg",
+  image: "../assets/images/rogue-avatar-2.jpg",
   lowAttackRange: 10,
   highAttackRange: 14,
   defense: 3,
@@ -81,7 +81,7 @@ const rogue = {
 const skeletonCommander = {
   name: 'Skeleton Commander',
   health: 25,
-  image: "../assets/images/skeleton-frenzied.jpg",
+  image: "../assets/images/skeleton-frenzied-2.jpg",
   lowAttackRange: 7,
   highAttackRange: 8,
   defense: 5,
@@ -91,7 +91,7 @@ const skeletonCommander = {
 const optionalBoss = {
   name: 'Lich',
   health: 35,
-  image: '../assets/images/lich.jpg',
+  image: '../assets/images/lich-2.jpg',
   lowAttackRange: 10,
   highAttackRange: 18,
   defense: 4,
@@ -101,7 +101,7 @@ const optionalBoss = {
 const mainBoss = {
   name: 'Uthvard the Giant King',
   health: 40,
-  image: "../assets/images/skeletal-giant-king.jpg",
+  image: "../assets/images/skeletal-giant-king-2.jpg",
   lowAttackRange: 8,
   highAttackRange: 18,
   defense: 7,
