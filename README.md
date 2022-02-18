@@ -35,7 +35,7 @@ Credits
 - All main screen art was done by [Fares Zoghlami]( https://linktr.ee/approtis)
 - The favicon was found at [flaticon.com](https://www.flaticon.com/) by [Freepik](https://www.flaticon.com/authors/freepik)
 - Animations came from [Animate.css](https://animate.style/)
-- All sounds came from [freesound.org](https://freesound.org/) by [ssiera1202](https://freesound.org/people/ssierra1202/), [ohforheavensake](https://freesound.org/people/ohforheavensake/), [Ryusa](https://freesound.org/people/ryusa/), [audione](https://freesound.org/people/audione/), [tonsil5](https://freesound.org/people/tonsil5/)
+- All sounds came from [freesound.org](https://freesound.org/) by [ssiera1202](https://freesound.org/people/ssierra1202/), [ohforheavensake](https://freesound.org/people/ohforheavensake/), [Ryusa](https://freesound.org/people/ryusa/), [audione](https://freesound.org/people/audione/), [tonsil5](https://freesound.org/people/tonsil5/), and [MTJohnson](https://freesound.org/people/MTJohnson/)
 
 ---
 Planned Icebox Features
