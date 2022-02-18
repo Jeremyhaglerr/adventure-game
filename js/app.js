@@ -288,7 +288,7 @@ function damageToPlayer(evt) {
   attack.pause()
   attack.play()
   attack.currentTime = 0
-  attack.volume = 0.3
+  attack.volume = 0.2
   let playerDamage = (Math.floor(Math.random() * (currentEnemyHighAttack - currentEnemyLowAttack + 1) + currentEnemyLowAttack))
   if (evt.target.id === 'defend-btn') {
     if ((playerDamage - (currentPlayerDefense + 2)) <= 0) {
@@ -358,7 +358,7 @@ function damageToEnemy() {
   attack.pause()
   attack.play()
   attack.currentTime = 0
-  attack.volume = 0.3
+  attack.volume = 0.2
   let enemyDamage = (Math.floor(Math.random() * (currentPlayerHighAttack - currentPlayerLowAttack + 1) + currentPlayerLowAttack))
   if ((enemyDamage - currentEnemyDefense) <= 0) {
     enemyDamage = 0
@@ -815,7 +815,7 @@ function goToNextChapterSurvival() {
 function thankYou() {
   topMessage.innerHTML =
     `
-    Congratulations! You have finished the Giant King's Catacombs! Thank you for playing my game, I had a tremendous amount of fun making it and hope it was fun to play as well. This game will eventually be the first chapter in a much longer story and I hope you will return to play when it is finished. For now, return to the dpeths of the catacombs below and choose other paths, who knows what secrets may lie in store.
+    Congratulations! You have finished the Giant King's Catacombs! Thank you for playing my game, I had a tremendous amount of fun making it and hope it was fun to play as well. This game will eventually be the first chapter in a much longer story and I hope you will return to play when it is finished. For now, return to the depths of the catacombs below and choose other paths, who knows what secrets may lie in store.
     `
     topMessage.style.height = '80vh'
     topMessage.style.overflow = 'auto'
